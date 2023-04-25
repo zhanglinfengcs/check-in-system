@@ -1,6 +1,6 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout.tsx";
-import { Home, Posts } from "../pages";
+import {Home, Leave, Posts} from "../pages";
 
 const Router = () => {
   return useRoutes([
@@ -20,6 +20,10 @@ const Router = () => {
           path: "posts",
           element: <Posts />,
         },
+        {
+          path: "leave",
+          element: <Leave />,
+        }
       ],
     },
   ]);
