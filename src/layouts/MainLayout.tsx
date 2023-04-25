@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import SideNav from "./SideNav.tsx"
+import SideNav from "./SideNav.tsx";
 
 const MainLayout: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ const MainLayout: React.FC = () => {
         <Outlet />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

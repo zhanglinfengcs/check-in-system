@@ -1,28 +1,28 @@
-import {Navigate, useRoutes} from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout.tsx";
-import { Home } from "../pages"
+import { Home } from "../pages";
 
 const Router = () => {
   return useRoutes([
     {
       path: "/",
-      element: <MainLayout/>,
+      element: <MainLayout />,
       children: [
         {
-          element: <Navigate to="home"/>,
-          index: true
+          element: <Navigate to="home" />,
+          index: true,
         },
         {
           path: "home",
-          element: <Home />
+          element: <Home />,
         },
         {
           path: "about",
-          element: <h1>About</h1>
-        }
-      ]
-    }
+          element: <h1>About</h1>,
+        },
+      ],
+    },
   ]);
-}
+};
 
-export default Router
+export default Router;
