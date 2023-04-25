@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../components/Logo";
 
 type SideNavItemType = {
@@ -10,7 +10,7 @@ type SideNavItemType = {
 };
 
 const sideNavItems: SideNavItemType[] = [
-  { title: "Home", path: "/home", current: true },
+  { title: "Home", path: "/home", current: false },
   { title: "Posts", path: "/posts", current: false },
 ];
 
@@ -19,12 +19,19 @@ function classNames(...classes: string[]) {
 }
 
 const SideNav: React.FC = () => {
-  const [navItems, setNavItems] = useState(sideNavItems);
+  const location = useLocation();
+  const [navItems, setNavItems] = useState(() => {
+    return sideNavItems.map(item => {
+      if (location.pathname.includes(item.title.toLowerCase()))
+        return {...item, current: true};
+      return item
+    })
+  });
 
   function handleClick(title: string) {
     const newNavItems = [...navItems];
     newNavItems.map((item) => {
-      if (item.current === true) {
+      if (item.current) {
         item.current = false;
       }
       if (item.title == title) {
@@ -33,6 +40,7 @@ const SideNav: React.FC = () => {
     });
     setNavItems(newNavItems);
   }
+
   return (
     <div className="h-full flex flex-col justify-start items-center gap-6">
       <div className="w-full flex flex-col">
