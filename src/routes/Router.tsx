@@ -18,7 +18,7 @@ const Router = () => {
         },
         {
           path: "posts",
-          element: <Posts />
+          element: <Posts />,
         },
       ],
     },

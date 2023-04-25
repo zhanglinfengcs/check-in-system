@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const Logo: React.FC = () => {
   // Indigo 700
-  const fillColor = '#4338ca';
+  const fillColor = "#4338ca";
   return (
     <svg
       fill="none"
@@ -24,4 +24,4 @@ const Logo: React.FC = () => {
   );
 };
 
-export default Logo
+export default Logo;

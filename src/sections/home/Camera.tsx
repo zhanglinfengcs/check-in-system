@@ -1,5 +1,5 @@
-import { Box, Paper, Stack, Button, styled } from '@mui/material';
-import { useState, useRef } from 'react';
+import { Box, Paper, Stack, Button, styled } from "@mui/material";
+import { useState, useRef } from "react";
 
 const videoSize = {
   width: 640,
@@ -8,16 +8,16 @@ const videoSize = {
 
 const IButton = styled(Button)(() => ({
   width: 128,
-  color: 'white',
+  color: "white",
   fontSize: 18,
-  backgroundColor: '#4f46e5',
+  backgroundColor: "#4f46e5",
   ":hover": {
     backgroundColor: "#3730a3",
-  }
-}))
+  },
+}));
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 const Camera: React.FC = () => {
@@ -33,7 +33,7 @@ const Camera: React.FC = () => {
   function successFunc(mediaStream: MediaStream) {
     const video = videoRef.current as HTMLVideoElement;
     // 旧的浏览器可能没有srcObject
-    if ('srcObject' in video) {
+    if ("srcObject" in video) {
       video.srcObject = mediaStream;
     }
     video.onloadedmetadata = () => {
@@ -63,7 +63,7 @@ const Camera: React.FC = () => {
     setIsOpen(false);
     const video = videoRef.current as HTMLVideoElement;
     const stream = video.srcObject as MediaStream;
-    if ('getTracks' in stream) {
+    if ("getTracks" in stream) {
       const tracks = stream.getTracks();
       tracks.forEach((track) => {
         track.stop();
@@ -78,10 +78,10 @@ const Camera: React.FC = () => {
     if (canvas == null) {
       return;
     }
-    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
     ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight); // 把视频中的一帧在canvas画布里面绘制出来
     const imgStr = canvas.toDataURL(); // 将图片资源转成字符串
-    const base64Img = imgStr.split(';base64,').pop(); // 将图片资源转成base64格式
+    const base64Img = imgStr.split(";base64,").pop(); // 将图片资源转成base64格式
     const imgData = {
       base64Img,
     };
@@ -96,61 +96,65 @@ const Camera: React.FC = () => {
   }
 
   return (
-    <Paper 
+    <Paper
       elevation={1}
       sx={{
-        width: '100%',
+        width: "100%",
         height: 500,
         borderRadius: 2,
       }}
     >
-      <Stack
-        direction='column'
-        position='relative'
-      >
+      <Stack direction="column" position="relative">
         <Box
-          component='div' 
+          component="div"
           sx={{
-            width: '100%',
+            width: "100%",
           }}
         >
-            <video
-              ref={videoRef}
-              width={videoSize.width}
-              height={videoSize.height}
-              className={classNames(isOpen ? '' : 'hidden', 'mx-auto mt-8 rounded-lg')}
-            />
-            <canvas
-              ref={canvasRef}
-              width={videoSize.width}
-              height={videoSize.height}
-              className={classNames(isOpen ? 'hidden' : '', 'mx-auto mt-8 rounded-lg')}
-            />
+          <video
+            ref={videoRef}
+            width={videoSize.width}
+            height={videoSize.height}
+            className={classNames(
+              isOpen ? "" : "hidden",
+              "mx-auto mt-8 rounded-lg"
+            )}
+          />
+          <canvas
+            ref={canvasRef}
+            width={videoSize.width}
+            height={videoSize.height}
+            className={classNames(
+              isOpen ? "hidden" : "",
+              "mx-auto mt-8 rounded-lg"
+            )}
+          />
         </Box>
-          <img ref={imgRef} src='' alt='imgTag' width={videoSize.width} height={videoSize.height} className='w-full hidden mx-auto mt-8 rounded-lg' />
+        <img
+          ref={imgRef}
+          src=""
+          alt="imgTag"
+          width={videoSize.width}
+          height={videoSize.height}
+          className="w-full hidden mx-auto mt-8 rounded-lg"
+        />
 
-        <Stack 
-          direction='row' 
-          justifyContent='space-around'
-          alignItems='center'
+        <Stack
+          direction="row"
+          justifyContent="space-around"
+          alignItems="center"
           sx={{
             mt: 5,
-            px: 12
+            px: 12,
           }}
         >
-          <IButton onClick={openMedia}>
-            打开摄像头
-          </IButton>
-          <IButton onClick={saveImg}>
-            截图
-          </IButton>
-          <IButton onClick={handleCheckIn}>
-            提交
-          </IButton>
+          <IButton onClick={openMedia}>打开摄像头</IButton>
+          <IButton onClick={saveImg}>截图</IButton>
+          <IButton onClick={handleCheckIn}>提交</IButton>
         </Stack>
       </Stack>
-    </Paper> 
+    </Paper>
   );
-}
+};
 
-export default Camera
+export default Camera;
