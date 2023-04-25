@@ -11,7 +11,7 @@ type SideNavItemType = {
 
 const sideNavItems: SideNavItemType[] = [
   { title: 'Home', path: '/home', current: true },
-  { title: 'About', path: '/about', current: false}
+  { title: 'Posts', path: '/posts', current: false}
 ]
 
 function classNames(...classes: string[]) {
