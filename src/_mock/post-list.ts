@@ -1,22 +1,23 @@
 import { faker } from '@faker-js/faker';
-type PostType = {
+
+export type PostType = {
   id: string,
   title: string,
   description: string,
-  time: Date,
+  date: string,
+  publisher: string,
 }
 
 faker.locale = 'zh_CN';
 
-export function createPost(): PostType {
+function createPost(): PostType {
   return {
     id: faker.datatype.uuid(),
     title: faker.lorem.sentence(),
     description: faker.lorem.paragraph(),
-    time: faker.date.recent(),
+    date: faker.date.recent().toDateString(),
+    publisher: faker.name.firstName(),
   };
 }
 
-const postList = Array.from({ length: 10 }).map(() => createPost());
-
-export default postList;
+export const postList = Array.from({ length: 20 }).map(() => createPost());

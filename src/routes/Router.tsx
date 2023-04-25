@@ -1,6 +1,6 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout.tsx";
-import { Home } from "../pages";
+import { Home, Posts } from "../pages";
 
 const Router = () => {
   return useRoutes([
@@ -17,8 +17,8 @@ const Router = () => {
           element: <Home />,
         },
         {
-          path: "about",
-          element: <h1>About</h1>,
+          path: "posts",
+          element: <Posts />
         },
       ],
     },
