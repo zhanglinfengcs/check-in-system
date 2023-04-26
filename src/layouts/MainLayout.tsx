@@ -19,7 +19,7 @@ const simpleSideNavItems: SideNavItemType[] = [
 ];
 
 const adminSideNavItems: SideNavItemType[] = [
-  { title: "Home", path: "/home", current: false },
+  { title: "Dashboard", path: "/admin/dashboard", current: false },
 ]
 
 const MainLayout: React.FC = () => {

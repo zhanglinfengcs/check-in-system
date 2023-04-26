@@ -11,7 +11,7 @@ const initUser: UserType = {
   name: "John Doe",
   email: "john@doe.com",
   phone: "123456789",
-  level: UserLevel.Simple,
+  level: UserLevel.Admin,
 }
 
 export const UserContext = createContext<UserContextType>({} as UserContextType)
