@@ -16,7 +16,11 @@ function classNames(...classes: string[]) {
 const SideNav: React.FC<{props: SideNavItemType[]}> = ({ props }) => {
   const location = useLocation();
   const [navItems, setNavItems] = useState(() => {
-    return props.map(item => {
+    return props.map((item, index) => {
+      if (location.pathname.toLowerCase() === '/admin') {
+        if (index === 0)
+          return {...item, current: true};
+      }
       if (location.pathname.includes(item.path.toLowerCase()))
         return {...item, current: true};
       return item
