@@ -9,13 +9,6 @@ type SideNavItemType = {
   current: boolean;
 };
 
-// const sideNavItems: SideNavItemType[] = [
-//   { title: "Home", path: "/home", current: false },
-//   { title: "Posts", path: "/posts", current: false },
-//   { title: "Leave", path: "/leave", current: false },
-//   { title: "Account", path: "/account", current: false },
-// ];
-
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -24,7 +17,7 @@ const SideNav: React.FC<{props: SideNavItemType[]}> = ({ props }) => {
   const location = useLocation();
   const [navItems, setNavItems] = useState(() => {
     return props.map(item => {
-      if (location.pathname.includes(item.title.toLowerCase()))
+      if (location.pathname.includes(item.path.toLowerCase()))
         return {...item, current: true};
       return item
     })
