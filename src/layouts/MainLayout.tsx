@@ -9,7 +9,7 @@ const MainLayout: React.FC = () => {
       <nav>
         <SideNav />
       </nav>
-      <main className=" my-3 mr-3 rounded-lg overflow-y-scroll">
+      <main className=" my-3 mr-3 rounded-lg overflow-y-auto bg-gray-100">
         <Outlet />
       </main>
     </div>

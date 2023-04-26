@@ -1,6 +1,6 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout.tsx";
-import {Home, Leave, Posts} from "../pages";
+import { Home, Leave, Posts, Account, NotFound } from "../pages";
 
 const Router = () => {
   return useRoutes([
@@ -23,9 +23,22 @@ const Router = () => {
         {
           path: "leave",
           element: <Leave />,
-        }
+        },
+        {
+          path: "account",
+          element: <Account />,
+        }, 
       ],
     },
+    {
+      path: "*",
+      element: <Navigate to="/404" />,
+    },
+    {
+      path: "404",
+      element: <NotFound />,
+    }
+    
   ]);
 };
 
