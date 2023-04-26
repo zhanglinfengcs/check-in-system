@@ -20,6 +20,7 @@ export default function Account() {
             spacing={3}
           >
             <Grid
+              item
               xs={12}
               md={6}
               lg={3}
@@ -27,6 +28,7 @@ export default function Account() {
               <AccountProfile />
             </Grid>
             <Grid
+              item
               xs={12}
               md={6}
               lg={8}
