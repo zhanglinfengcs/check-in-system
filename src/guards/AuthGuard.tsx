@@ -5,8 +5,6 @@ import useUser from "../hooks/useUser";
 const AuthGuard: React.FC = () => {
   const { user } = useUser();
   const location = useLocation();
-  console.log('pass auth guard')
-  console.log('pathname', location.pathname)
 
   if (!user) {
     return (
