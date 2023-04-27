@@ -1,6 +1,14 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout.tsx";
-import { Home, Leave, Posts, Account, NotFound, Login } from "../pages";
+import {
+  Home,
+  Leave,
+  Posts,
+  Account,
+  NotFound,
+  Login,
+  Dashboard,
+} from "../pages";
 import AuthGuard from "../guards/AuthGuard.tsx";
 
 const Router = () => {
@@ -31,6 +39,19 @@ const Router = () => {
             {
               path: "account",
               element: <Account />,
+            },
+            {
+              path: "admin",
+              children: [
+                {
+                  element: <Navigate to="dashboard" />,
+                  index: true,
+                },
+                {
+                  path: "dashboard",
+                  element: <Dashboard />,
+                },
+              ],
             },
           ],
         },

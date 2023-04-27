@@ -15,10 +15,10 @@ function createLeave(): LeaveType {
     title: faker.lorem.sentence(),
     desc: faker.lorem.paragraph(),
     date: faker.date.recent().toDateString(),
-    result: createResult(faker.datatype.number({ min: 0, max: 2 }))
-  }
+    result: createResult(faker.datatype.number({ min: 0, max: 2 })),
+  };
 }
 
 const leaveHistoryList = Array.from({ length: 20 }).map(() => createLeave());
 
-export default leaveHistoryList
+export default leaveHistoryList;
