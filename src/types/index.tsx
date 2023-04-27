@@ -7,11 +7,11 @@ export interface PostType {
 }
 
 export interface LeaveType {
-  id: string,
-	title: string,
-	desc: string,
-	date: string,
-  result: LeaveResult,
+  id: string;
+  title: string;
+  desc: string;
+  date: string;
+  result: LeaveResult;
 }
 
 export enum LeaveResult {
@@ -21,14 +21,28 @@ export enum LeaveResult {
 }
 
 export interface UserType {
-  id: string,
-  name: string,
-  email: string,
-  phone: string,
-  level: UserLevel,
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  level: UserLevel;
+  status: UserStatus;
 }
 
 export enum UserLevel {
   Admin = 0,
   Simple = 1,
+}
+
+export enum UserStatus {
+  Unchecked = 0,
+  Checked = 1,
+  Leave = 2,
+}
+
+export interface CheckInRecordType {
+  id: string;
+  name: string;
+  date: string;
+  status: UserStatus;
 }

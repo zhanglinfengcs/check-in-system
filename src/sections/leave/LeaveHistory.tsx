@@ -1,11 +1,10 @@
-import { LeaveType} from "../../types";
-import {Card, CardContent, Stack} from "@mui/material";
+import { LeaveType } from "../../types";
+import { Card, CardContent, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-
-function LeaveHistoryItem( props: LeaveType ) {
+function LeaveHistoryItem(props: LeaveType) {
   return (
-     <Card sx={{ minWidth: 275, width: '100%' }}>
+    <Card sx={{ minWidth: 275, width: "100%" }}>
       <CardContent>
         <Typography variant="h5" component="div">
           {/* be{bull}nev{bull}o{bull}lent */}
@@ -24,28 +23,26 @@ function LeaveHistoryItem( props: LeaveType ) {
         <Button size="small">Learn More</Button>
       </CardActions> */}
     </Card>
-  )
+  );
 }
 
-function LeaveHistory({props}: {props: LeaveType[]}) {
+function LeaveHistory({ props }: { props: LeaveType[] }) {
   return (
-     <Stack
+    <Stack
       direction="column"
       justifyContent="flex-start"
       alignItems="center"
       sx={{
         width: "80%",
         gap: 3,
-        mb: 3
+        mb: 3,
       }}
-     >
-      {
-        props.map((item, index) => {
-          return (<LeaveHistoryItem {...item} key={index}/>)
-        })
-      }
-     </Stack>
-  )
+    >
+      {props.map((item, index) => {
+        return <LeaveHistoryItem {...item} key={index} />;
+      })}
+    </Stack>
+  );
 }
 
-export default LeaveHistory
+export default LeaveHistory;

@@ -1,20 +1,11 @@
-import { Box, Paper, Stack, Button, styled } from "@mui/material";
+import { Box, Paper, Stack } from "@mui/material";
 import { useState, useRef } from "react";
+import IButton from "../../components/IButton";
 
 const videoSize = {
   width: 640,
   height: 360,
 };
-
-const IButton = styled(Button)(() => ({
-  width: 128,
-  color: "white",
-  fontSize: 18,
-  backgroundColor: "#4f46e5",
-  ":hover": {
-    backgroundColor: "#3730a3",
-  },
-}));
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
