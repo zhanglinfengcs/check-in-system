@@ -7,38 +7,26 @@ const AuthGuard: React.FC = () => {
   const location = useLocation();
 
   if (!user) {
-    return (
-      <Navigate to='/login' state={{ from: location }} replace={true} />
-    );
+    return <Navigate to="/login" state={{ from: location }} replace={true} />;
   }
-  
-  if (location.pathname.includes('/admin')) {
+
+  if (location.pathname.includes("/admin")) {
     if (user.level === UserLevel.Admin) {
-      return (
-        <Outlet />
-      );
+      return <Outlet />;
     } else {
-      return (
-         <Navigate to='login' state={{ from: location }} replace={true} />
-      );
+      return <Navigate to="login" state={{ from: location }} replace={true} />;
     }
   }
 
-  if (!location.pathname.includes('/admin')) {
+  if (!location.pathname.includes("/admin")) {
     if (user.level === UserLevel.Simple) {
-      return (
-        <Outlet />
-      );
+      return <Outlet />;
     } else {
-      return (
-         <Navigate to='login' state={{ from: location }} replace={true} />
-      );
+      return <Navigate to="login" state={{ from: location }} replace={true} />;
     }
   }
 
-  return (
-    <Outlet />
-  )
-}
+  return <Outlet />;
+};
 
-export default AuthGuard
+export default AuthGuard;

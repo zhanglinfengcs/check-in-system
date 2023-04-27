@@ -1,5 +1,5 @@
-import { useState, createContext } from "react"
-import { UserType, UserLevel } from "../types"
+import { useState, createContext } from "react";
+import { UserType, UserLevel, UserStatus } from "../types";
 
 interface UserContextType {
   user: UserType | null;
@@ -7,23 +7,26 @@ interface UserContextType {
 }
 
 const initUser: UserType = {
-  id: '1',
+  id: "1",
   name: "John Doe",
   email: "john@doe.com",
   phone: "123456789",
   level: UserLevel.Admin,
-}
+  status: UserStatus.Unchecked,
+};
 
-export const UserContext = createContext<UserContextType>({} as UserContextType)
+export const UserContext = createContext<UserContextType>(
+  {} as UserContextType
+);
 
-function UserProvider({children}: {children: React.ReactNode}) {
-  const [user, setUser] = useState<UserType | null>(initUser)
+function UserProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<UserType | null>(initUser);
 
   return (
-    <UserContext.Provider value={{user, setUser}}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
-  )
+  );
 }
 
-export default UserProvider
+export default UserProvider;
