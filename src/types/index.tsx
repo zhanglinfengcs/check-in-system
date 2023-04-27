@@ -41,7 +41,8 @@ export enum UserStatus {
 }
 
 export interface CheckInRecordType {
-  id: string;
+  recordId: string;
+  userId: string;
   name: string;
   date: string;
   status: UserStatus;

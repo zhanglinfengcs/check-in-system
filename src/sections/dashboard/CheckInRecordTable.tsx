@@ -7,18 +7,19 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { checkInRecordList as rows } from "../../_mock";
 import StatusChip from "../../components/StatusChip";
+import { CheckInRecordType } from "../../types";
+import dayjs from "dayjs";
 
 interface Column {
-  id: "id" | "name" | "date" | "status";
+  id: "userId" | "name" | "date" | "status";
   label: string;
   minWidth?: number;
   align?: "center";
 }
 
 const columns: readonly Column[] = [
-  { id: "id", label: "ID", minWidth: 170 },
+  { id: "userId", label: "ID", minWidth: 170 },
   { id: "name", label: "Name", minWidth: 100, align: "center" },
   {
     id: "date",
@@ -34,7 +35,9 @@ const columns: readonly Column[] = [
   },
 ];
 
-const CheckInRecordTable: React.FC = () => {
+const CheckInRecordTable: React.FC<{ rows: CheckInRecordType[] }> = ({
+  rows,
+}) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -76,37 +79,42 @@ const CheckInRecordTable: React.FC = () => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={row.id}
-                    onClick={(e) => handleClick(e)}
-                  >
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      if (column.id === "status") {
+          {rows && (
+            <TableBody>
+              {rows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row.recordId}
+                      onClick={(e) => handleClick(e)}
+                    >
+                      {columns.map((column) => {
+                        let value = row[column.id];
+                        if (column.id === "date") {
+                          value = dayjs(Number(value)).format("YYYY-MM-DD");
+                        }
+                        if (column.id === "status") {
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              <StatusChip status={Number(value)} />
+                            </TableCell>
+                          );
+                        }
                         return (
                           <TableCell key={column.id} align={column.align}>
-                            <StatusChip status={Number(value)} />
+                            {value}
                           </TableCell>
                         );
-                      }
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
       <TablePagination

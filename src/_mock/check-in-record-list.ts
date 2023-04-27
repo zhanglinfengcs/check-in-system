@@ -11,14 +11,15 @@ function createStatus(num: number) {
 
 function createCheckInRecord(): CheckInRecordType {
   return {
-    id: faker.datatype.uuid(),
+    recordId: faker.datatype.uuid(),
+    userId: faker.datatype.uuid(),
     name: faker.name.fullName(),
-    date: faker.date.recent().toDateString(),
+    date: faker.date.recent().getTime().toString(),
     status: createStatus(faker.datatype.number({ min: 0, max: 2 })),
   };
 }
 
-const checkInRecordList = Array.from({ length: 20 }).map(() =>
+const checkInRecordList = Array.from({ length: 200 }).map(() =>
   createCheckInRecord()
 );
 
