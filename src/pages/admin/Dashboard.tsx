@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Page from "../components/Page";
+import Page from "../../components/Page";
 import {
   CheckInRecordSearchBar,
   CheckInRecordTable,
-} from "../sections/dashboard";
-import { checkInRecordList as initList } from "../_mock";
-import { CheckInRecordType, UserStatus } from "../types";
+} from "../../sections/dashboard";
+import { checkInRecordList as initList } from "../../_mock";
+import { CheckInRecordType, UserStatus } from "../../types";
 import dayjs from "dayjs";
 
 export type AllStatus =
@@ -61,7 +61,7 @@ function isSameDay(date1: string | number, date2: string | number): boolean {
   );
 }
 
-const AdminDashboard: React.FC = () => {
+const Dashboard: React.FC = () => {
   const [recordList, setRecordList] = useState<CheckInRecordType[]>(() => {
     const newList = initList.filter((item) => {
       return isSameDay(item.date, dayjs().valueOf());
@@ -83,4 +83,4 @@ const AdminDashboard: React.FC = () => {
   );
 };
 
-export default AdminDashboard;
+export default Dashboard;

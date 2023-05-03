@@ -1,8 +1,8 @@
-import { PostsPanel } from "../sections/posts";
-import Page from "../components/Page";
+import { PostsPanel } from "../../sections/posts";
+import Page from "../../components/Page";
 import { useState } from "react";
-import { postList as initialPostList } from "../_mock/post-list";
-import { PostType } from "../types";
+import { postList as initialPostList } from "../../_mock/post-list";
+import { PostType } from "../../types";
 
 const Posts: React.FC = () => {
   const [postList, setPostList] = useState<PostType[]>(initialPostList);

@@ -1,6 +1,6 @@
 import { Box, Container, Grid } from "@mui/material";
-import Page from "../components/Page";
-import { AccountProfile, AccountProfileDetails } from "../sections/account";
+import Page from "../../components/Page";
+import { AccountProfile, AccountProfileDetails } from "../../sections/account";
 
 export default function Account() {
   return (

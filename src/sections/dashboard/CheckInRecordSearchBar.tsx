@@ -11,12 +11,10 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { UserStatus } from "../../types";
 import dayjs from "dayjs";
-import { Payload, AllStatus } from "../../pages/AdminDashboard";
+import { Payload, AllStatus } from "../../pages/admin/Dashboard";
 
 const CheckInRecordSearchBar: React.FC<{
   handleChange: (payload: Payload) => void;
@@ -118,17 +116,15 @@ const CheckInRecordSearchBar: React.FC<{
               mb: 1,
             }}
           >
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={["DatePicker"]}>
-                <DatePicker
-                  label="Controlled picker"
-                  value={date}
-                  onChange={(newDate) => {
-                    handleDateChange(newDate);
-                  }}
-                />
-              </DemoContainer>
-            </LocalizationProvider>
+            <DemoContainer components={["DatePicker"]}>
+              <DatePicker
+                label="Controlled picker"
+                value={date}
+                onChange={(newDate) => {
+                  handleDateChange(newDate);
+                }}
+              />
+            </DemoContainer>
           </Box>
         </Stack>
       </Stack>

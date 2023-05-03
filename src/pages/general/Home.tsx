@@ -1,5 +1,5 @@
-import { Camera } from "../sections/home";
-import Page from "../components/Page";
+import { Camera } from "../../sections/home";
+import Page from "../../components/Page";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import UnpublishedOutlinedIcon from "@mui/icons-material/UnpublishedOutlined";
 import PauseCircleOutlineOutlinedIcon from "@mui/icons-material/PauseCircleOutlineOutlined";
