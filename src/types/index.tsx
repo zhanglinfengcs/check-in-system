@@ -47,3 +47,13 @@ export interface CheckInRecordType {
   date: string;
   status: UserStatus;
 }
+
+export interface LeaveApplyType {
+  applyId: string;
+  userId: string;
+  title: string;
+  content: string;
+  name: string;
+  result: LeaveResult;
+  date: string;
+}
