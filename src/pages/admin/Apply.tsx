@@ -74,7 +74,6 @@ const Apply: React.FC = () => {
             <List
               sx={{
                 width: "100%",
-                maxWidth: 360,
                 bgcolor: "background.paper",
                 p: 0,
               }}

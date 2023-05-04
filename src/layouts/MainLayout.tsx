@@ -21,6 +21,7 @@ const simpleSideNavItems: SideNavItemType[] = [
 const adminSideNavItems: SideNavItemType[] = [
   { title: "Dashboard", path: "/admin/dashboard", current: false },
   { title: "Apply", path: "/admin/apply", current: false },
+  { title: "Posts", path: "/admin/posts", current: false },
 ];
 
 const MainLayout: React.FC = () => {

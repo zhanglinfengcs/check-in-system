@@ -1,7 +1,7 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout.tsx";
 import { Home, Leave, Posts, Account, NotFound, Login } from "../pages/general";
-import { Apply, Dashboard } from "../pages/admin";
+import { Apply, Dashboard, PostsManage } from "../pages/admin";
 import AuthGuard from "../guards/AuthGuard.tsx";
 
 const Router = () => {
@@ -48,6 +48,10 @@ const Router = () => {
                   path: "apply",
                   element: <Apply />,
                 },
+                {
+                  path: "posts",
+                  element: <PostsManage />,
+                }
               ],
             },
           ],

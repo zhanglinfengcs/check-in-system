@@ -292,7 +292,7 @@ export default function PostsTable() {
   }, []);
 
   const handleRequestSort = React.useCallback(
-    (event: React.MouseEvent<unknown>, newOrderBy: keyof Data) => {
+    (_event: React.MouseEvent<unknown>, newOrderBy: keyof Data) => {
       const isAsc = orderBy === newOrderBy && order === "asc";
       const toggledOrder = isAsc ? "desc" : "asc";
       setOrder(toggledOrder);
@@ -320,7 +320,7 @@ export default function PostsTable() {
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  const handleClick = (_event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: readonly string[] = [];
 
@@ -341,7 +341,7 @@ export default function PostsTable() {
   };
 
   const handleChangePage = React.useCallback(
-    (event: unknown, newPage: number) => {
+    (_event: unknown, newPage: number) => {
       setPage(newPage);
 
       const sortedRows = stableSort(rows, getComparator(order, orderBy));
