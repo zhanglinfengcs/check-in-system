@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../components/Logo";
+import { IsStaff, UserType } from "../types";
 
 type SideNavItemType = {
   title: string;
@@ -9,14 +10,19 @@ type SideNavItemType = {
   current: boolean;
 };
 
+interface SideNavProps {
+  itemList: SideNavItemType[];
+  currentUser: UserType;
+}
+
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const SideNav: React.FC<{ props: SideNavItemType[] }> = ({ props }) => {
+const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
   const location = useLocation();
   const [navItems, setNavItems] = useState(() => {
-    return props.map((item, index) => {
+    return itemList.map((item, index) => {
       if (location.pathname.toLowerCase() === "/admin") {
         if (index === 0) return { ...item, current: true };
       }
@@ -46,8 +52,8 @@ const SideNav: React.FC<{ props: SideNavItemType[] }> = ({ props }) => {
           <Logo />
         </div>
         <div className="mt-5 mx-auto w-4/5 flex flex-col justify-start items-star bg-violet-100 px-4 py-4 rounded-lg">
-          <div className="text-purple-800 font-bold">David</div>
-          <div className="text-purple-800 font-semibold">Manager</div>
+          <div className="text-purple-800 font-bold">{currentUser.name}</div>
+          <div className="text-purple-800 font-semibold">{currentUser.isStaff === IsStaff.Yes ? "普通员工" : "管理员"}</div>
         </div>
       </div>
       <hr className="border-t-1 w-10/12 mx-auto border-solid" />

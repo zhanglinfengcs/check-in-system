@@ -1,29 +1,29 @@
 import { Chip } from "@mui/material";
-import { LeaveResult } from "../types";
+import { LeaveApplyResult } from "../types";
 
-function getLabel(result: LeaveResult) {
+function getLabel(result: LeaveApplyResult) {
   switch (result) {
-    case LeaveResult.Pending:
+    case LeaveApplyResult.Pending:
       return "待审核";
-    case LeaveResult.Approved:
+    case LeaveApplyResult.Approved:
       return "已通过";
     default:
       return "未通过";
   }
 }
 
-function getColor(result: LeaveResult) {
+function getColor(result: LeaveApplyResult) {
   switch (result) {
-    case LeaveResult.Rejected:
+    case LeaveApplyResult.Rejected:
       return "error";
-    case LeaveResult.Approved:
+    case LeaveApplyResult.Approved:
       return "success";
     default:
       return "info";
   }
 }
 
-const LeaveApplyResultChip: React.FC<{ result: LeaveResult }> = ({
+const LeaveApplyResultChip: React.FC<{ result: LeaveApplyResult }> = ({
   result,
 }) => {
   const label = getLabel(result);

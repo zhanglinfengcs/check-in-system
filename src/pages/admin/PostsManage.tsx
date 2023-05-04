@@ -1,19 +1,27 @@
-import { Box, List, ListItem, Paper, Stack, TextField, Typography } from "@mui/material";
-import Page from "../../components/Page"
-import { postList as initList} from "../../_mock";
+import {
+  Box,
+  List,
+  ListItem,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
+import Page from "../../components/Page";
+import { postList as initList } from "../../_mock";
 import { PostType } from "../../types";
 import { useState } from "react";
 import IButton from "../../components/IButton";
 
 const generalCSS = {
-  borderBottom: "1px solid #ccc",
+  borderRadius: "10px",
   ":hover": {
-    backgroundColor: "#eee",
+    backgroundColor: "#ede9fe",
     transition: "all 0.3s ease",
   },
 };
 const selectedCSS = Object.assign({}, generalCSS, {
-  backgroundColor: "#eee",
+  backgroundColor: "#ede9fe",
 });
 
 const PostsManage: React.FC = () => {
@@ -54,51 +62,51 @@ const PostsManage: React.FC = () => {
             >
               {postList.map((item) => {
                 return (
-                  <ListItem
-                    key={item.postId}
-                    alignItems="flex-start"
-                    sx={selectedId === item.postId ? selectedCSS : generalCSS}
-                    onClick={() => handleListItemClick(item.postId)}
-                  >
-                    <Stack
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                        height: "100%",
-                        gap: "5px",
-                      }}
+                  <div className="p-2 mr-1" key={item.postId}>
+                    <ListItem
+                      alignItems="flex-start"
+                      sx={selectedId === item.postId ? selectedCSS : generalCSS}
+                      onClick={() => handleListItemClick(item.postId)}
                     >
-                      {item.title}
-                      <div>
-                        <Stack
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            mt: 1,
-                          }}
-                        >
-                          <Typography
-                            sx={{ display: "inline" }}
-                            component="span"
-                            variant="body2"
-                            color="text.primary"
+                      <Stack
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                          height: "100%",
+                          gap: "5px",
+                        }}
+                      >
+                        {item.title}
+                        <div>
+                          <Stack
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              mt: 1,
+                            }}
                           >
-                            {item.publisher}
-                          </Typography>
-                        </Stack>
-                        {item.date}
-                      </div>
-                    </Stack>
-                  </ListItem>
+                            <Typography
+                              sx={{ display: "inline" }}
+                              component="span"
+                              variant="body2"
+                              color="text.primary"
+                            >
+                              {item.publisher}
+                            </Typography>
+                          </Stack>
+                          {item.date}
+                        </div>
+                      </Stack>
+                    </ListItem>
+                  </div>
                 );
               })}
             </List>
           </Stack>
-          {
-            selectedItem && (
+          {selectedItem && (
             <Stack
               sx={{
                 py: 2,
@@ -108,23 +116,28 @@ const PostsManage: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-start",
-                position: 'relative'
+                position: "relative",
               }}
             >
               <Box
                 component="form"
                 sx={{
-                  '& .MuiTextField-root': { m: 1, width: '100%' },
+                  "& .MuiTextField-root": { m: 1, width: "100%" },
                 }}
                 noValidate
                 autoComplete="off"
               >
-                <TextField id="outlined-basic" label="Title" variant="outlined" value={selectedItem.title}/>
+                <TextField
+                  id="outlined-basic"
+                  label="Title"
+                  variant="outlined"
+                  value={selectedItem.title}
+                />
               </Box>
               <Box
                 component="form"
                 sx={{
-                  '& .MuiTextField-root': { m: 1, width: '100%' },
+                  "& .MuiTextField-root": { m: 1, width: "100%" },
                 }}
                 noValidate
                 autoComplete="off"
@@ -140,9 +153,9 @@ const PostsManage: React.FC = () => {
               <IButton
                 sx={{
                   m: 1,
-                  position: 'absolute',
-                  bottom: '10%',
-                  right: '2%'
+                  position: "absolute",
+                  bottom: "10%",
+                  right: "2%",
                 }}
               >
                 提交
@@ -152,7 +165,7 @@ const PostsManage: React.FC = () => {
         </Stack>
       </Paper>
     </Page>
-  )
-}
+  );
+};
 
-export default PostsManage
+export default PostsManage;

@@ -6,9 +6,9 @@ import { Divider } from "@mui/material";
 
 const Leave: React.FC = () => {
   return (
-    <Page title={"Leave"}>
+    <Page title="请假">
       <LeaveForm />
-      <Divider sx={{ width: "80%" }} />
+      <Divider sx={{ width: "100%" }} />
       <LeaveHistory props={leaveHistoryList} />
     </Page>
   );

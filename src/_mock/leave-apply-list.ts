@@ -1,17 +1,17 @@
 import { faker } from "@faker-js/faker";
-import { LeaveApplyType, LeaveResult } from "../types";
+import { LeaveApplyType, LeaveApplyResult } from "../types";
 
 faker.locale = "zh_CN";
 
 function createResult(num: number) {
-  if (num === 0) return LeaveResult.Pending;
-  else if (num === 1) return LeaveResult.Approved;
-  else return LeaveResult.Rejected;
+  if (num === 0) return LeaveApplyResult.Pending;
+  else if (num === 1) return LeaveApplyResult.Approved;
+  else return LeaveApplyResult.Rejected;
 }
 
 function createApply(): LeaveApplyType {
   return {
-    applyId: faker.datatype.uuid(),
+    leaveId: faker.datatype.uuid(),
     userId: faker.datatype.uuid(),
     title: faker.lorem.words(),
     name: faker.name.fullName(),

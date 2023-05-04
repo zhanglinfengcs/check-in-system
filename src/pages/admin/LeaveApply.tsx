@@ -4,27 +4,27 @@ import React, { useState } from "react";
 import { leaveApplyList as initList } from "../../_mock";
 import IButton from "../../components/IButton";
 import LeaveApplyResultChip from "../../components/LeaveApplyResultChip";
-import { LeaveApplyType, LeaveResult } from "../../types";
+import { LeaveApplyType, LeaveApplyResult } from "../../types";
 
 const generalCSS = {
-  borderBottom: "1px solid #ccc",
+  borderRadius: "10px",
   ":hover": {
-    backgroundColor: "#eee",
+    backgroundColor: "#ede9fe",
     transition: "all 0.3s ease",
   },
 };
 const selectedCSS = Object.assign({}, generalCSS, {
-  backgroundColor: "#eee",
+  backgroundColor: "#ede9fe",
 });
 
 const Apply: React.FC = () => {
   const [leaveApplyList, setLeaveApplyList] =
     useState<LeaveApplyType[]>(initList);
   const [selectedId, setSelectedId] = useState<string>(
-    leaveApplyList[0].applyId
+    leaveApplyList[0].leaveId
   );
   const selectedItem = leaveApplyList.find(
-    (item) => item.applyId === selectedId
+    (item) => item.leaveId === selectedId
   );
 
   const handleListItemClick = (id: string) => {
@@ -33,8 +33,8 @@ const Apply: React.FC = () => {
 
   const handleApprove = (id: string) => {
     const newList = leaveApplyList.map((item) => {
-      if (item.applyId === id) {
-        item.result = LeaveResult.Approved;
+      if (item.leaveId === id) {
+        item.result = LeaveApplyResult.Approved;
       }
       return item;
     });
@@ -43,8 +43,8 @@ const Apply: React.FC = () => {
 
   const handleReject = (id: string) => {
     const newList = leaveApplyList.map((item) => {
-      if (item.applyId === id) {
-        item.result = LeaveResult.Rejected;
+      if (item.leaveId === id) {
+        item.result = LeaveApplyResult.Rejected;
       }
       return item;
     });
@@ -80,46 +80,49 @@ const Apply: React.FC = () => {
             >
               {leaveApplyList?.map((item) => {
                 return (
-                  <ListItem
-                    key={item.applyId}
-                    alignItems="flex-start"
-                    sx={selectedId === item.applyId ? selectedCSS : generalCSS}
-                    onClick={() => handleListItemClick(item.applyId)}
-                  >
-                    <Stack
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                        height: "100%",
-                        gap: "5px",
-                      }}
+                  <div className="p-2 mr-1" key={item.leaveId}>
+                    <ListItem
+                      alignItems="flex-start"
+                      sx={
+                        selectedId === item.leaveId ? selectedCSS : generalCSS
+                      }
+                      onClick={() => handleListItemClick(item.leaveId)}
                     >
-                      {item.title}
-                      <div>
-                        <Stack
-                          sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            mt: 1,
-                          }}
-                        >
-                          <Typography
-                            sx={{ display: "inline" }}
-                            component="span"
-                            variant="body2"
-                            color="text.primary"
+                      <Stack
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          width: "100%",
+                          height: "100%",
+                          gap: "10px",
+                        }}
+                      >
+                        {item.title}
+                        <div>
+                          <Stack
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              mt: 1,
+                            }}
                           >
-                            {item.name}
-                          </Typography>
-                          <LeaveApplyResultChip result={item.result} />
-                        </Stack>
-                        {item.date}
-                      </div>
-                    </Stack>
-                  </ListItem>
+                            <Typography
+                              sx={{ display: "inline" }}
+                              component="span"
+                              variant="body2"
+                              color="text.primary"
+                            >
+                              {item.name}
+                            </Typography>
+                            <LeaveApplyResultChip result={item.result} />
+                          </Stack>
+                          {item.date}
+                        </div>
+                      </Stack>
+                    </ListItem>
+                  </div>
                 );
               })}
             </List>
@@ -177,10 +180,10 @@ const Apply: React.FC = () => {
                 id="button-group"
                 className="flex flex-row justify-end items-center gap-4 mt-6"
               >
-                <IButton onClick={() => handleApprove(selectedItem.applyId)}>
+                <IButton onClick={() => handleApprove(selectedItem.leaveId)}>
                   同意
                 </IButton>
-                <IButton onClick={() => handleReject(selectedItem.applyId)}>
+                <IButton onClick={() => handleReject(selectedItem.leaveId)}>
                   拒绝
                 </IButton>
               </div>

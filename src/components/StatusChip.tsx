@@ -1,29 +1,29 @@
 import { Chip } from "@mui/material";
-import { UserStatus } from "../types";
+import { AttendSituation } from "../types";
 
-function getLabel(status: UserStatus) {
+function getLabel(status: AttendSituation) {
   switch (status) {
-    case UserStatus.Unchecked:
+    case AttendSituation.Unchecked:
       return "未签到";
-    case UserStatus.Checked:
+    case AttendSituation.Checked:
       return "已签到";
     default:
       return "请假";
   }
 }
 
-function getColor(status: UserStatus) {
+function getColor(status: AttendSituation) {
   switch (status) {
-    case UserStatus.Unchecked:
+    case AttendSituation.Unchecked:
       return "error";
-    case UserStatus.Checked:
+    case AttendSituation.Checked:
       return "success";
     default:
       return "info";
   }
 }
 
-const StatusChip: React.FC<{ status: UserStatus }> = ({ status }) => {
+const StatusChip: React.FC<{ status: AttendSituation }> = ({ status }) => {
   const label = getLabel(status);
   const color = getColor(status);
 

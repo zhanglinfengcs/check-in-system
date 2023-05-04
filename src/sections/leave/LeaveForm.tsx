@@ -1,17 +1,9 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import { Button, Paper, Stack, styled, TextField } from "@mui/material";
+import { Paper, Stack, TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import IButton from "../../components/IButton";
 
-const IButton = styled(Button)(() => ({
-  width: 128,
-  color: "white",
-  fontSize: 18,
-  backgroundColor: "#4f46e5",
-  ":hover": {
-    backgroundColor: "#3730a3",
-  },
-}));
 
 const LeaveForm: React.FC = () => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -22,7 +14,7 @@ const LeaveForm: React.FC = () => {
   return (
     <Paper
       sx={{
-        width: "80%",
+        width: "100%",
       }}
     >
       <Typography variant="h6" sx={{ p: 3 }}>
@@ -31,7 +23,7 @@ const LeaveForm: React.FC = () => {
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { width: "70ch" },
+          "& .MuiTextField-root": { width: "100%" },
         }}
         noValidate
         autoComplete="off"
@@ -48,7 +40,6 @@ const LeaveForm: React.FC = () => {
             pb: 3,
           }}
         >
-          <TextField id="outlined-basic" label="Title" variant="outlined" />
           <TextField
             id="outlined-multiline-static"
             label="Description"

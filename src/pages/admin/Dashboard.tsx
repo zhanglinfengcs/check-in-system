@@ -5,13 +5,13 @@ import {
   CheckInRecordTable,
 } from "../../sections/dashboard";
 import { checkInRecordList as initList } from "../../_mock";
-import { CheckInRecordType, UserStatus } from "../../types";
+import { AttendType, AttendSituation } from "../../types";
 import dayjs from "dayjs";
 
 export type AllStatus =
-  | UserStatus.Unchecked
-  | UserStatus.Checked
-  | UserStatus.Leave
+  | AttendSituation.Unchecked
+  | AttendSituation.Checked
+  | AttendSituation.Leave
   | -1;
 
 export interface Payload {
@@ -20,7 +20,7 @@ export interface Payload {
   date?: string;
 }
 
-function filterInput(input: string, list: CheckInRecordType[]) {
+function filterInput(input: string, list: AttendType[]) {
   if (!input) {
     return list;
   }
@@ -31,7 +31,7 @@ function filterInput(input: string, list: CheckInRecordType[]) {
   return newList;
 }
 
-function filterStatus(status: AllStatus, list: CheckInRecordType[]) {
+function filterStatus(status: AllStatus, list: AttendType[]) {
   // AllStatus.All = -1
   if (status === -1 || status === undefined) {
     return list;
@@ -43,7 +43,7 @@ function filterStatus(status: AllStatus, list: CheckInRecordType[]) {
   return newList;
 }
 
-function filterDate(date: string | undefined, list: CheckInRecordType[]) {
+function filterDate(date: string | undefined, list: AttendType[]) {
   if (!date) {
     return list;
   }
@@ -62,7 +62,7 @@ function isSameDay(date1: string | number, date2: string | number): boolean {
 }
 
 const Dashboard: React.FC = () => {
-  const [recordList, setRecordList] = useState<CheckInRecordType[]>(() => {
+  const [recordList, setRecordList] = useState<AttendType[]>(() => {
     const newList = initList.filter((item) => {
       return isSameDay(item.date, dayjs().valueOf());
     });

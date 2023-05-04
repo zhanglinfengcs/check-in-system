@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { UserStatus } from "../../types";
+import { AttendSituation } from "../../types";
 import dayjs from "dayjs";
 import { Payload, AllStatus } from "../../pages/admin/Dashboard";
 
@@ -103,9 +103,9 @@ const CheckInRecordSearchBar: React.FC<{
               onChange={handleStatusChange}
             >
               <MenuItem value={-1}>All</MenuItem>
-              <MenuItem value={UserStatus.Unchecked}>Unchecked</MenuItem>
-              <MenuItem value={UserStatus.Checked}>Checked</MenuItem>
-              <MenuItem value={UserStatus.Leave}>Leave</MenuItem>
+              <MenuItem value={AttendSituation.Unchecked}>Unchecked</MenuItem>
+              <MenuItem value={AttendSituation.Checked}>Checked</MenuItem>
+              <MenuItem value={AttendSituation.Leave}>Leave</MenuItem>
             </Select>
           </FormControl>
         </Box>

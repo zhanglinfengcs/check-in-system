@@ -7,53 +7,59 @@ export interface PostType {
 }
 
 export interface LeaveType {
-  id: string;
-  title: string;
+  leaveId: string;
   desc: string;
   date: string;
-  result: LeaveResult;
+  result: LeaveApplyResult;
 }
 
-export enum LeaveResult {
+export enum LeaveApplyResult {
   Pending = 0,
   Approved = 1,
   Rejected = 2,
 }
 
 export interface UserType {
-  id: string;
+  userId: string;
   name: string;
-  email: string;
-  phone: string;
-  level: UserLevel;
-  status: UserStatus;
+  password: string;
+  phoneNum: string;
+  gender: Gender;
+  isStaff: IsStaff;
+  status: AttendSituation;
+  image?: string;
 }
 
-export enum UserLevel {
-  Admin = 0,
-  Simple = 1,
+export enum Gender {
+  Male = 0,
+  Female = 1
 }
 
-export enum UserStatus {
+export enum IsStaff {
+  Yes = 0,
+  No = 1,
+}
+
+export enum AttendSituation {
   Unchecked = 0,
   Checked = 1,
   Leave = 2,
 }
 
-export interface CheckInRecordType {
-  recordId: string;
+export interface AttendType {
+  attendId: string;
   userId: string;
   name: string;
   date: string;
-  status: UserStatus;
+  status: AttendSituation;
 }
 
 export interface LeaveApplyType {
-  applyId: string;
+  leaveId: string;
   userId: string;
   title: string;
   content: string;
   name: string;
-  result: LeaveResult;
+  result: LeaveApplyResult;
   date: string;
 }

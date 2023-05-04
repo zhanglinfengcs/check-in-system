@@ -1,7 +1,7 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout.tsx";
-import { Home, Leave, Posts, Account, NotFound, Login } from "../pages/general";
-import { Apply, Dashboard, PostsManage } from "../pages/admin";
+import { Home, Leave, Notices, Account, NotFound, Login } from "../pages/general";
+import { Dashboard, LeaveApply, PostsManage, WorkersManage } from "../pages/admin";
 import AuthGuard from "../guards/AuthGuard.tsx";
 
 const Router = () => {
@@ -22,8 +22,8 @@ const Router = () => {
               element: <Home />,
             },
             {
-              path: "posts",
-              element: <Posts />,
+              path: "notices",
+              element: <Notices />,
             },
             {
               path: "leave",
@@ -46,12 +46,16 @@ const Router = () => {
                 },
                 {
                   path: "apply",
-                  element: <Apply />,
+                  element: <LeaveApply />,
                 },
                 {
                   path: "posts",
                   element: <PostsManage />,
-                }
+                },
+                {
+                  path: "workers",
+                  element: <WorkersManage />,
+                },
               ],
             },
           ],

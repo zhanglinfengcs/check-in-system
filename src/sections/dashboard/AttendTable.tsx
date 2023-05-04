@@ -8,7 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import StatusChip from "../../components/StatusChip";
-import { CheckInRecordType } from "../../types";
+import { AttendType } from "../../types";
 import dayjs from "dayjs";
 
 interface Column {
@@ -35,7 +35,7 @@ const columns: readonly Column[] = [
   },
 ];
 
-const CheckInRecordTable: React.FC<{ rows: CheckInRecordType[] }> = ({
+const CheckInRecordTable: React.FC<{ rows: AttendType[] }> = ({
   rows,
 }) => {
   const [page, setPage] = React.useState(0);
@@ -89,7 +89,7 @@ const CheckInRecordTable: React.FC<{ rows: CheckInRecordType[] }> = ({
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.recordId}
+                      key={row.attendId}
                       onClick={(e) => handleClick(e)}
                     >
                       {columns.map((column) => {

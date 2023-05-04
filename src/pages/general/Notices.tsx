@@ -1,10 +1,10 @@
-import { PostsPanel } from "../../sections/posts";
+import { NoticesPanel } from "../../sections/notices";
 import Page from "../../components/Page";
 import { useState } from "react";
 import { postList as initialPostList } from "../../_mock";
 import { PostType } from "../../types";
 
-const Posts: React.FC = () => {
+const Notices: React.FC = () => {
   const [postList, setPostList] = useState<PostType[]>(initialPostList);
 
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -49,9 +49,9 @@ const Posts: React.FC = () => {
           />
         </div>
       </div>
-      <PostsPanel props={postList} />
+      <NoticesPanel props={postList} />
     </Page>
   );
 };
 
-export default Posts;
+export default Notices;
