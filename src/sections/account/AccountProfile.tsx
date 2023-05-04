@@ -6,7 +6,6 @@ import {
   CardActions,
   CardContent,
   Divider,
-  Typography,
 } from "@mui/material";
 
 const user = {
@@ -18,7 +17,11 @@ const user = {
   timezone: "GTM-7",
 };
 
-function AccountProfile() {
+interface AccountProfileProps {
+  disabled: boolean;
+}
+
+const AccountProfile: React.FC<AccountProfileProps> = ({ disabled }) => {
   return (
     <Card>
       <CardContent>
@@ -32,12 +35,12 @@ function AccountProfile() {
           <Avatar
             src={user.avatar}
             sx={{
-              height: 80,
+              height: 150,
               mb: 2,
-              width: 80,
+              width: 150,
             }}
           />
-          <Typography gutterBottom variant="h5">
+          {/* <Typography gutterBottom variant="h5">
             {user.name}
           </Typography>
           <Typography color="text.secondary" variant="body2">
@@ -45,12 +48,12 @@ function AccountProfile() {
           </Typography>
           <Typography color="text.secondary" variant="body2">
             {user.timezone}
-          </Typography>
+          </Typography> */}
         </Box>
       </CardContent>
       <Divider />
       <CardActions>
-        <Button fullWidth variant="text" disabled>
+        <Button fullWidth variant="text" disabled={disabled}>
           Upload picture
         </Button>
       </CardActions>

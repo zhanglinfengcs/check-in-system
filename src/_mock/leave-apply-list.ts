@@ -16,7 +16,7 @@ function createApply(): LeaveApplyType {
     title: faker.lorem.words(),
     name: faker.name.fullName(),
     content: faker.lorem.paragraph(),
-    date: faker.date.recent().toDateString(),
+    date: faker.date.recent().toString(),
     result: createResult(faker.datatype.number({ min: 0, max: 2 })),
   };
 }

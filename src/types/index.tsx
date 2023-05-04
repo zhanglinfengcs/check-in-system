@@ -1,9 +1,9 @@
-export interface PostType {
-  postId: string;
+export interface NoticeType {
+  noticeId: string;
   title: string;
   content: string;
-  date: string;
-  publisher: string;
+  createdTime: string;
+  editTime: string,
 }
 
 export interface LeaveType {

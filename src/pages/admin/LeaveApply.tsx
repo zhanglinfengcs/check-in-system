@@ -17,7 +17,7 @@ const selectedCSS = Object.assign({}, generalCSS, {
   backgroundColor: "#ede9fe",
 });
 
-const Apply: React.FC = () => {
+const LeaveApply: React.FC = () => {
   const [leaveApplyList, setLeaveApplyList] =
     useState<LeaveApplyType[]>(initList);
   const [selectedId, setSelectedId] = useState<string>(
@@ -195,4 +195,4 @@ const Apply: React.FC = () => {
   );
 };
 
-export default Apply;
+export default LeaveApply;

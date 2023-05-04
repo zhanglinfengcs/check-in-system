@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import { IsStaff, UserType } from "../types";
+import useUser from "../hooks/useUser";
 
 type SideNavItemType = {
   title: string;
@@ -21,6 +22,8 @@ function classNames(...classes: string[]) {
 
 const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useUser();
   const [navItems, setNavItems] = useState(() => {
     return itemList.map((item, index) => {
       if (location.pathname.toLowerCase() === "/admin") {
@@ -32,7 +35,8 @@ const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
     });
   });
 
-  function handleClick(title: string) {
+  function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, title: string) {
+    event.preventDefault()
     const newNavItems = [...navItems];
     newNavItems.map((item) => {
       if (item.current) {
@@ -43,6 +47,14 @@ const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
       }
     });
     setNavItems(newNavItems);
+    if (title === 'Account') {
+      navigate(`/account/${currentUser.userId}`)
+    } else {
+      let path = ""
+      if (user?.isStaff === IsStaff.No)
+        path += "/admin"
+      navigate(`${path}/${title.toLowerCase()}`);
+    }
   }
 
   return (
@@ -69,8 +81,8 @@ const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
                   : "text-gray-900",
                 "w-4/5 rounded-lg text-center py-2 hover:bg-violet-100 text-purple-800"
               )}
-              onClick={() => {
-                handleClick(item.title);
+              onClick={(e) => {
+                handleClick(e, item.title);
               }}
             >
               {item.title}

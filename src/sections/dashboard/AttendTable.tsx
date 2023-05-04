@@ -9,7 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import StatusChip from "../../components/StatusChip";
 import { AttendType } from "../../types";
-import dayjs from "dayjs";
+import { FormatDate } from "../../lib/Format";
 
 interface Column {
   id: "userId" | "name" | "date" | "status";
@@ -95,7 +95,7 @@ const CheckInRecordTable: React.FC<{ rows: AttendType[] }> = ({
                       {columns.map((column) => {
                         let value = row[column.id];
                         if (column.id === "date") {
-                          value = dayjs(Number(value)).format("YYYY-MM-DD");
+                          value = FormatDate(value as string);
                         }
                         if (column.id === "status") {
                           return (

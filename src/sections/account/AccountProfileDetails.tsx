@@ -1,43 +1,40 @@
 import { useCallback, useState } from "react";
 import {
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
   CardHeader,
-  Divider,
   TextField,
   Unstable_Grid2 as Grid,
 } from "@mui/material";
+import IButton from "../../components/IButton";
+import { AttendSituation, Gender, IsStaff, UserType } from "../../types";
 
 const states = [
   {
-    value: "alabama",
-    label: "Alabama",
+    value: "staff",
+    label: "员工",
   },
   {
-    value: "new-york",
-    label: "New York",
-  },
-  {
-    value: "san-francisco",
-    label: "San Francisco",
-  },
-  {
-    value: "los-angeles",
-    label: "Los Angeles",
+    value: "admin",
+    label: "管理员",
   },
 ];
 
-function AccountProfileDetails() {
-  const [values, setValues] = useState({
-    firstName: "Anika",
-    lastName: "Visser",
-    email: "demo@devias.io",
-    phone: "",
-    state: "los-angeles",
-    country: "USA",
+interface AccountProfileDetailsProps {
+  disabled: boolean;
+}
+
+const AccountProfileDetails: React.FC<AccountProfileDetailsProps> = ({ disabled }) => {
+  const [values, setValues] = useState<UserType>({
+    userId: '00001',
+    name: "Visser",
+    password: "demo@devias.io",
+    phoneNum: "123456789",
+    gender: Gender.Male,
+    isStaff: IsStaff.Yes,
+    status: AttendSituation.Checked,
   });
 
   const handleChange = useCallback(
@@ -64,71 +61,77 @@ function AccountProfileDetails() {
           p: 2,
         }}
       >
-        <CardHeader subheader="The information can be edited" title="Profile" />
-        <CardContent sx={{ pt: 0 }}>
+        <CardHeader title="个人资料" />
+        <CardContent sx={{ pt: 2 }}>
           <Box sx={{ m: -1.5 }}>
             <Grid container spacing={3}>
               <Grid xs={12} md={6}>
                 <TextField
                   fullWidth
-                  helperText="Please specify the first name"
-                  label="First name"
-                  name="firstName"
+                  helperText="工号不可更改"
+                  label="工号"
+                  name="userId"
                   onChange={(e) => handleChange(e)}
                   required
-                  value={values.firstName}
+                  value={values.userId}
+                  disabled={disabled}
                 />
               </Grid>
               <Grid xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label="Last name"
-                  name="lastName"
+                  label="密码"
+                  name="password"
                   onChange={handleChange}
                   required
-                  value={values.lastName}
+                  type="password"
+                  value={values.password}
+                  disabled={disabled}
                 />
               </Grid>
               <Grid xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label="Email Address"
-                  name="email"
+                  label="姓名"
+                  name="name"
                   onChange={handleChange}
                   required
-                  value={values.email}
+                  value={values.name}
+                  disabled={disabled}
                 />
               </Grid>
               <Grid xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label="Phone Number"
-                  name="phone"
+                  label="电话号码"
+                  name="phoneNum"
                   onChange={handleChange}
-                  type="number"
-                  value={values.phone}
+                  value={values.phoneNum}
+                  disabled={disabled}
                 />
               </Grid>
               <Grid xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label="Country"
-                  name="country"
+                  label="性别"
+                  name="gender"
                   onChange={handleChange}
                   required
-                  value={values.country}
+                  value={values.gender}
+                  disabled={disabled}
                 />
               </Grid>
               <Grid xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label="Select State"
-                  name="state"
+                  label="是否为员工"
+                  name="isStaff"
                   onChange={handleChange}
                   required
                   select
                   SelectProps={{ native: true }}
-                  value={values.state}
+                  value={values.isStaff}
+                  disabled={disabled}
                 >
                   {states.map((option) => (
                     <option key={option.value} value={option.value}>
@@ -140,11 +143,10 @@ function AccountProfileDetails() {
             </Grid>
           </Box>
         </CardContent>
-        <Divider />
         <CardActions sx={{ justifyContent: "flex-end" }}>
-          <Button variant="contained" disabled>
-            Save details
-          </Button>
+          <IButton variant="contained" disabled={disabled}>
+            提交
+          </IButton>
         </CardActions>
       </Card>
     </form>

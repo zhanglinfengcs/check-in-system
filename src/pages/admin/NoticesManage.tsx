@@ -9,9 +9,10 @@ import {
 } from "@mui/material";
 import Page from "../../components/Page";
 import { postList as initList } from "../../_mock";
-import { PostType } from "../../types";
+import { NoticeType } from "../../types";
 import { useState } from "react";
 import IButton from "../../components/IButton";
+import { FormatDateAndTime, FormatDateToRecent } from "../../lib/Format";
 
 const generalCSS = {
   borderRadius: "10px",
@@ -24,17 +25,17 @@ const selectedCSS = Object.assign({}, generalCSS, {
   backgroundColor: "#ede9fe",
 });
 
-const PostsManage: React.FC = () => {
-  const [postList, setPostList] = useState<PostType[]>(initList);
-  const [selectedId, setSelectedId] = useState<string>(postList[0].postId);
+const NoticesManage: React.FC = () => {
+  const [noticeList, setNoticeList] = useState<NoticeType[]>(initList);
+  const [selectedId, setSelectedId] = useState<string>(noticeList[0].noticeId);
 
-  const selectedItem = postList.find((item) => item.postId === selectedId);
+  const selectedItem = noticeList.find((item) => item.noticeId === selectedId);
 
   const handleListItemClick = (id: string) => {
     setSelectedId(id);
   };
   return (
-    <Page title="Posts Manage">
+    <Page title="Notices Manage">
       <Paper elevation={2} sx={{ width: "100%", height: "500px" }}>
         <Stack
           sx={{
@@ -60,13 +61,13 @@ const PostsManage: React.FC = () => {
                 p: 0,
               }}
             >
-              {postList.map((item) => {
+              {noticeList.map((item) => {
                 return (
-                  <div className="p-2 mr-1" key={item.postId}>
+                  <div className="p-2 mr-1" key={item.noticeId}>
                     <ListItem
                       alignItems="flex-start"
-                      sx={selectedId === item.postId ? selectedCSS : generalCSS}
-                      onClick={() => handleListItemClick(item.postId)}
+                      sx={selectedId === item.noticeId ? selectedCSS : generalCSS}
+                      onClick={() => handleListItemClick(item.noticeId)}
                     >
                       <Stack
                         sx={{
@@ -91,13 +92,17 @@ const PostsManage: React.FC = () => {
                             <Typography
                               sx={{ display: "inline" }}
                               component="span"
-                              variant="body2"
+                              variant="subtitle2"
                               color="text.primary"
                             >
-                              {item.publisher}
+                              {'创建于: ' + FormatDateAndTime(item.createdTime)}
                             </Typography>
                           </Stack>
-                          {item.date}
+                          <Typography
+                            variant="subtitle2"
+                          >
+                            {'最近一次编辑于: ' + FormatDateToRecent(item.editTime) + '以前'}
+                          </Typography>
                         </div>
                       </Stack>
                     </ListItem>
@@ -168,4 +173,4 @@ const PostsManage: React.FC = () => {
   );
 };
 
-export default PostsManage;
+export default NoticesManage;

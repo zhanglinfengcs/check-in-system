@@ -1,8 +1,21 @@
 import { Box, Container, Grid } from "@mui/material";
 import Page from "../../components/Page";
 import { AccountProfile, AccountProfileDetails } from "../../sections/account";
+import { useLocation } from "react-router-dom";
+
+
 
 export default function Account() {
+  const location = useLocation();
+  const disabled = getDisabled();
+
+  function getDisabled() {
+    if (location.pathname.includes("admin")) {
+      return false;
+    }
+    return true
+  }
+
   return (
     <Page title="Account">
       <Box
@@ -14,12 +27,12 @@ export default function Account() {
         }}
       >
         <Container maxWidth="lg">
-          <Grid container spacing={3}>
+          <Grid container spacing={1}>
             <Grid item xs={12} md={6} lg={3}>
-              <AccountProfile />
+              <AccountProfile disabled={disabled}/>
             </Grid>
             <Grid item xs={12} md={6} lg={8} ml={8}>
-              <AccountProfileDetails />
+              <AccountProfileDetails disabled={disabled}/>
             </Grid>
           </Grid>
         </Container>

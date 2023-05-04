@@ -15,13 +15,13 @@ const simpleSideNavItems: SideNavItemType[] = [
   { title: "Home", path: "/home", current: false },
   { title: "Notices", path: "/notices", current: false },
   { title: "Leave", path: "/leave", current: false },
-  { title: "Account", path: "/account", current: false },
+  { title: "Account", path: `/account`, current: false },
 ];
 
 const adminSideNavItems: SideNavItemType[] = [
   { title: "Dashboard", path: "/admin/dashboard", current: false },
   { title: "Apply", path: "/admin/apply", current: false },
-  { title: "Posts", path: "/admin/posts", current: false },
+  { title: "Notices", path: "/admin/notices", current: false },
   { title: "Workers", path: "/admin/workers", current: false },
 ];
 
