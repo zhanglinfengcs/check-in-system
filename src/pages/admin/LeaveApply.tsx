@@ -6,17 +6,8 @@ import IButton from "../../components/IButton";
 import LeaveApplyResultChip from "../../components/LeaveApplyResultChip";
 import { LeaveApplyType, LeaveApplyResult } from "../../types";
 import { FormatDate } from "../../lib/Format";
+import { generalCSS, selectedCSS } from "../../styles";
 
-const generalCSS = {
-  borderRadius: "10px",
-  ":hover": {
-    backgroundColor: "#ede9fe",
-    transition: "all 0.3s ease",
-  },
-};
-const selectedCSS = Object.assign({}, generalCSS, {
-  backgroundColor: "#ede9fe",
-});
 
 const LeaveApply: React.FC = () => {
   const [leaveApplyList, setLeaveApplyList] =
