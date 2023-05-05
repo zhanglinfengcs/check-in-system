@@ -1,2 +1,2 @@
-export { default as CheckInRecordSearchBar } from "./CheckInRecordSearchBar";
-export { default as CheckInRecordTable } from "./CheckInRecordTable";
+export { default as CheckInRecordSearchBar } from "./AttendSearchBar";
+export { default as CheckInRecordTable } from "./AttendTable";

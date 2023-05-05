@@ -1,17 +1,17 @@
-import { CheckInRecordType, UserStatus } from "../types";
+import { AttendSituation, AttendType } from "../types";
 import { faker } from "@faker-js/faker";
 
 faker.locale = "zh_CN";
 
 function createStatus(num: number) {
-  if (num === 0) return UserStatus.Unchecked;
-  else if (num === 1) return UserStatus.Checked;
-  else return UserStatus.Leave;
+  if (num === 0) return AttendSituation.Unchecked;
+  else if (num === 1) return AttendSituation.Checked;
+  else return AttendSituation.Leave;
 }
 
-function createCheckInRecord(): CheckInRecordType {
+function createCheckInRecord(): AttendType {
   return {
-    recordId: faker.datatype.uuid(),
+    attendId: faker.datatype.uuid(),
     userId: faker.datatype.uuid(),
     name: faker.name.fullName(),
     date: faker.date.recent().getTime().toString(),

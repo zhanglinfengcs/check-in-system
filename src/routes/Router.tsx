@@ -1,14 +1,7 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout.tsx";
-import {
-  Home,
-  Leave,
-  Posts,
-  Account,
-  NotFound,
-  Login,
-  Dashboard,
-} from "../pages";
+import { Home, Leave, Notices, Account, NotFound, Login, NoticeDetails } from "../pages/general";
+import { Dashboard, LeaveApply, NoticesManage, WorkersManage } from "../pages/admin";
 import AuthGuard from "../guards/AuthGuard.tsx";
 
 const Router = () => {
@@ -29,16 +22,20 @@ const Router = () => {
               element: <Home />,
             },
             {
-              path: "posts",
-              element: <Posts />,
+              path: "notices",
+              element: <Notices />,
             },
             {
               path: "leave",
               element: <Leave />,
             },
             {
-              path: "account",
+              path: "account/:userId",
               element: <Account />,
+            },
+            {
+              path: "notice/:noticeId",
+              element: <NoticeDetails />
             },
             {
               path: "admin",
@@ -50,6 +47,22 @@ const Router = () => {
                 {
                   path: "dashboard",
                   element: <Dashboard />,
+                },
+                {
+                  path: "apply",
+                  element: <LeaveApply />,
+                },
+                {
+                  path: "notices",
+                  element: <NoticesManage />,
+                },
+                {
+                  path: "workers",
+                  element: <WorkersManage />,
+                },
+                {
+                  path: "account/:id",
+                  element: <Account />,
                 },
               ],
             },

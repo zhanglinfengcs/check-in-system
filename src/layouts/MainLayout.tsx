@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import SideNav from "./SideNav.tsx";
-import { UserType, UserLevel } from "../types/index.tsx";
+import { UserType, IsStaff } from "../types/index.tsx";
 import useUser from "../hooks/useUser.tsx";
 
 type SideNavItemType = {
@@ -13,26 +13,28 @@ type SideNavItemType = {
 
 const simpleSideNavItems: SideNavItemType[] = [
   { title: "Home", path: "/home", current: false },
-  { title: "Posts", path: "/posts", current: false },
+  { title: "Notices", path: "/notices", current: false },
   { title: "Leave", path: "/leave", current: false },
-  { title: "Account", path: "/account", current: false },
+  { title: "Account", path: `/account`, current: false },
 ];
 
 const adminSideNavItems: SideNavItemType[] = [
   { title: "Dashboard", path: "/admin/dashboard", current: false },
+  { title: "Apply", path: "/admin/apply", current: false },
+  { title: "Notices", path: "/admin/notices", current: false },
+  { title: "Workers", path: "/admin/workers", current: false },
 ];
 
 const MainLayout: React.FC = () => {
   const { user } = useUser();
-  const { level } = user as UserType;
-
+  const { isStaff } = user as UserType;
   return (
     <div className="w-screen h-screen grid xl:grid-cols-[1fr_4fr] 2xl:grid-cols-[1fr_6fr]">
       <nav>
-        {level === UserLevel.Admin ? (
-          <SideNav props={adminSideNavItems} />
+        {isStaff === IsStaff.No ? (
+          <SideNav itemList={adminSideNavItems} currentUser={user as UserType}/>
         ) : (
-          <SideNav props={simpleSideNavItems} />
+          <SideNav itemList={simpleSideNavItems} currentUser={user as UserType}/>
         )}
       </nav>
       <main className=" my-3 mr-3 rounded-lg overflow-y-auto bg-gray-100">

@@ -6,22 +6,16 @@ function LeaveHistoryItem(props: LeaveType) {
   return (
     <Card sx={{ minWidth: 275, width: "100%" }}>
       <CardContent>
-        <Typography variant="h5" component="div">
-          {/* be{bull}nev{bull}o{bull}lent */}
-          {props.title}
+        <Typography variant="subtitle1" component="div">
+          {props.desc}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {/* adjective */}
+        <Typography sx={{ mb: 1.5, mt: 1 }} variant="body2" color="text.secondary">
           {props.date}
         </Typography>
         <Typography variant="body1">
-          {/* well meaning and kindly. {'"a benevolent smile"'} */}
           {props.result}
         </Typography>
       </CardContent>
-      {/* <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions> */}
     </Card>
   );
 }
@@ -33,7 +27,7 @@ function LeaveHistory({ props }: { props: LeaveType[] }) {
       justifyContent="flex-start"
       alignItems="center"
       sx={{
-        width: "80%",
+        width: "100%",
         gap: 3,
         mb: 3,
       }}

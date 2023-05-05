@@ -1,5 +1,5 @@
 import { useLocation, Outlet, Navigate } from "react-router-dom";
-import { UserLevel } from "../types";
+import { IsStaff } from "../types";
 import useUser from "../hooks/useUser";
 
 const AuthGuard: React.FC = () => {
@@ -11,7 +11,7 @@ const AuthGuard: React.FC = () => {
   }
 
   if (location.pathname.includes("/admin")) {
-    if (user.level === UserLevel.Admin) {
+    if (user.isStaff === IsStaff.No) {
       return <Outlet />;
     } else {
       return <Navigate to="login" state={{ from: location }} replace={true} />;
@@ -19,7 +19,7 @@ const AuthGuard: React.FC = () => {
   }
 
   if (!location.pathname.includes("/admin")) {
-    if (user.level === UserLevel.Simple) {
+    if (user.isStaff === IsStaff.Yes) {
       return <Outlet />;
     } else {
       return <Navigate to="login" state={{ from: location }} replace={true} />;

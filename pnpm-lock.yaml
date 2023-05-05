@@ -20,8 +20,8 @@ dependencies:
     specifier: ^5.12.0
     version: 5.12.0(react@18.2.0)
   "@mui/x-date-pickers":
-    specifier: ^6.2.1
-    version: 6.2.1(@emotion/react@11.10.6)(@emotion/styled@11.10.6)(@mui/base@5.0.0-alpha.126)(@mui/material@5.12.1)(@mui/system@5.12.1)(dayjs@1.11.7)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^6.3.0
+    version: 6.3.0(@emotion/react@11.10.6)(@emotion/styled@11.10.6)(@mui/base@5.0.0-alpha.126)(@mui/material@5.12.1)(@mui/system@5.12.1)(dayjs@1.11.7)(react-dom@18.2.0)(react@18.2.0)
   dayjs:
     specifier: ^1.11.7
     version: 1.11.7
@@ -1261,10 +1261,10 @@ packages:
       react-is: 18.2.0
     dev: false
 
-  /@mui/x-date-pickers@6.2.1(@emotion/react@11.10.6)(@emotion/styled@11.10.6)(@mui/base@5.0.0-alpha.126)(@mui/material@5.12.1)(@mui/system@5.12.1)(dayjs@1.11.7)(react-dom@18.2.0)(react@18.2.0):
+  /@mui/x-date-pickers@6.3.0(@emotion/react@11.10.6)(@emotion/styled@11.10.6)(@mui/base@5.0.0-alpha.126)(@mui/material@5.12.1)(@mui/system@5.12.1)(dayjs@1.11.7)(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
-        integrity: sha512-pLSqzxJWgO2MV6so8A4LEGr1nDQuKJugKKP32Ej/YXGqUfW3CS1bHoYeuavO+Y/5JH4qnf7BPvcGEVXIjqTGTA==,
+        integrity: sha512-Qux/nRGb0HueZU4L0h1QEqmORCrpgLukWWhG1Im6cFCmLtZbBey/0JuAFRa+OgvIXgGktDt8SY/FYsRkfGt2TQ==,
       }
     engines: { node: ">=14.0.0" }
     peerDependencies:
@@ -1279,7 +1279,7 @@ packages:
       luxon: ^3.0.2
       moment: ^2.29.4
       moment-hijri: ^2.1.2
-      moment-jalaali: ^0.7.4 || ^0.8.0 || ^0.9.0
+      moment-jalaali: ^0.7.4 || ^0.8.0 || ^0.9.0 || ^0.10.0
       react: ^17.0.2 || ^18.0.0
       react-dom: ^17.0.2 || ^18.0.0
     peerDependenciesMeta:
@@ -1303,13 +1303,6 @@ packages:
         optional: true
     dependencies:
       "@babel/runtime": 7.21.0
-      "@date-io/core": 2.16.0
-      "@date-io/date-fns": 2.16.0
-      "@date-io/date-fns-jalali": 2.16.0
-      "@date-io/hijri": 2.16.1
-      "@date-io/jalaali": 2.16.1
-      "@date-io/luxon": 2.16.1
-      "@date-io/moment": 2.16.1
       "@emotion/react": 11.10.6(@types/react@18.0.28)(react@18.2.0)
       "@emotion/styled": 11.10.6(@emotion/react@11.10.6)(@types/react@18.0.28)(react@18.2.0)
       "@mui/base": 5.0.0-alpha.126(@types/react@18.0.28)(react-dom@18.2.0)(react@18.2.0)

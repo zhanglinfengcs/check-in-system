@@ -1,5 +1,5 @@
 import { useState, createContext } from "react";
-import { UserType, UserLevel, UserStatus } from "../types";
+import { UserType, IsStaff, Gender, AttendSituation } from "../types";
 
 interface UserContextType {
   user: UserType | null;
@@ -7,12 +7,13 @@ interface UserContextType {
 }
 
 const initUser: UserType = {
-  id: "1",
+  userId: "1",
   name: "John Doe",
-  email: "john@doe.com",
-  phone: "123456789",
-  level: UserLevel.Admin,
-  status: UserStatus.Unchecked,
+  password: '123456789',
+  phoneNum: "123456789",
+  gender: Gender.Male,
+  isStaff: IsStaff.Yes,
+  status: AttendSituation.Checked,
 };
 
 export const UserContext = createContext<UserContextType>(

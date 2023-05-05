@@ -1,23 +1,19 @@
-import { PostsPanel } from "../sections/posts";
-import Page from "../components/Page";
+import Page from "../../components/Page";
+import { WorkersTable } from "../../sections/worker";
+import { workerList as initList } from "../../_mock";
 import { useState } from "react";
-import { postList as initialPostList } from "../_mock/post-list";
-import { PostType } from "../types";
+import { UserType } from "../../types";
 
-const Posts: React.FC = () => {
-  const [postList, setPostList] = useState<PostType[]>(initialPostList);
+const WorkersManage: React.FC = () => {
+  const [workerList, setWorkerList] = useState<UserType[]>(initList);
 
-  function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const newPostList = [...initialPostList];
-    const filteredPostList = newPostList.filter((post) => {
-      return post.title.toLowerCase().includes(e.target.value.toLowerCase());
-    });
-    setPostList(filteredPostList);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newList = initList.filter((worker) => worker.userId.includes(e.target.value) || worker.name.includes(e.target.value))
+    setWorkerList(newList)
   }
-
   return (
-    <Page title="Posts">
-      <div
+    <Page title="Workers Manage">
+        <div
         id="search-bar-card"
         className="w-full h-20 bg-white relative rounded-lg shadow"
       >
@@ -43,15 +39,17 @@ const Posts: React.FC = () => {
             type="text"
             name="search"
             id="search"
-            placeholder="Search Post"
+            placeholder="ID / Name"
             className="inline-block w-full h-9 outline-none"
-            onChange={(e) => onInputChange(e)}
+            onChange={(e) => handleInputChange(e)}
           />
         </div>
       </div>
-      <PostsPanel props={postList} />
+      <WorkersTable 
+        rows={workerList} 
+      />
     </Page>
   );
 };
 
-export default Posts;
+export default WorkersManage;
