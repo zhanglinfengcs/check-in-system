@@ -1,6 +1,4 @@
 import * as React from "react";
-import { alpha } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,347 +6,140 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { visuallyHidden } from "@mui/utils";
-import { PostType } from "../../types";
+import { NoticeType } from "../../types";
+import { FormatDate } from "../../lib/Format";
+import IButton from "../../components/IButton";
+import { useNavigate } from "react-router-dom";
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-type Order = "asc" | "desc";
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key
-): (
-  a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string }
-) => number {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
-function stableSort<T>(
-  array: readonly T[],
-  comparator: (a: T, b: T) => number
-) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
-
-interface HeadCell {
-  disablePadding: boolean;
-  id: keyof PostType;
+interface Column {
+  id: 'title' | 'createdTime' | 'editTime' | 'details';
   label: string;
-  numeric: boolean;
+  minWidth?: number;
+  align?: 'right';
+  format?: (value: string) => string;
 }
 
-const headCells: readonly HeadCell[] = [
-  {
-    id: "title",
-    numeric: false,
-    disablePadding: true,
-    label: "Title",
+const columns: readonly Column[] = [
+  { id: 'title', label: 'Title', minWidth: 170 },
+  { 
+    id: 'createdTime', 
+    label: 'Created Time', 
+    minWidth: 100,
+    format: (value: string) => FormatDate(value),
   },
   {
-    id: "date",
-    numeric: false,
-    disablePadding: false,
-    label: "Date",
+    id: 'editTime',
+    label: 'Edit Time',
+    minWidth: 170,
+    align: 'right',
+    format: (value: string) => FormatDate(value),
   },
   {
-    id: "publisher",
-    numeric: false,
-    disablePadding: false,
-    label: "Publisher",
-  },
+    id: 'details',
+    label: 'Details',
+    minWidth: 170,
+    align: 'right'
+  }
 ];
 
-const DEFAULT_ORDER = "asc";
-const DEFAULT_ORDER_BY = "title";
-const DEFAULT_ROWS_PER_PAGE = 5;
-
-interface EnhancedTableProps {
-  numSelected: number;
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    newOrderBy: keyof PostType
-  ) => void;
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  order: Order;
-  orderBy: string;
-  rowCount: number;
+interface NoticesPanelProps {
+  props: NoticeType[];
 }
 
-function EnhancedTableHead(props: EnhancedTableProps) {
-  const { order, orderBy, onRequestSort } = props;
-  const createSortHandler =
-    (newOrderBy: keyof PostType) => (event: React.MouseEvent<unknown>) => {
-      onRequestSort(event, newOrderBy);
-    };
-
-  return (
-    <TableHead>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
-            padding={"normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-interface EnhancedTableToolbarProps {
-  numSelected: number;
-}
-
-function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nutrition
-        </Typography>
-      )}
-    </Toolbar>
-  );
-}
-
-export default function PostsTable({ props }: { props: PostType[] }) {
-  const [order, setOrder] = React.useState<Order>(DEFAULT_ORDER);
-  const [orderBy, setOrderBy] =
-    React.useState<keyof PostType>(DEFAULT_ORDER_BY);
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
+const NoticesPanel: React.FC<NoticesPanelProps> = ({ props }) => {
   const [page, setPage] = React.useState(0);
-  const [visibleRows, setVisibleRows] = React.useState<PostType[] | null>(null);
-  const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
-  const [paddingHeight, setPaddingHeight] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const rows = props;
 
-  const postList = props;
-
-  React.useEffect(() => {
-    let rowsOnMount = stableSort(
-      postList,
-      getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY)
-    );
-    rowsOnMount = rowsOnMount.slice(
-      0 * DEFAULT_ROWS_PER_PAGE,
-      0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE
-    );
-
-    setVisibleRows(rowsOnMount);
-  }, [postList]);
-
-  const handleRequestSort = React.useCallback(
-    (_event: React.MouseEvent<unknown>, newOrderBy: keyof PostType) => {
-      const isAsc = orderBy === newOrderBy && order === "asc";
-      const toggledOrder = isAsc ? "desc" : "asc";
-      setOrder(toggledOrder);
-      setOrderBy(newOrderBy);
-
-      const sortedRows = stableSort(
-        postList,
-        getComparator(toggledOrder, newOrderBy)
-      );
-      const updatedRows = sortedRows.slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      );
-      setVisibleRows(updatedRows);
-    },
-    [order, orderBy, page, postList, rowsPerPage]
-  );
-
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = postList.map((n) => n.title);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    setPage(newPage);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleClick = (_event: React.MouseEvent<unknown>, _name: string) => {
-    return;
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
   };
 
-  const handleChangePage = React.useCallback(
-    (_event: unknown, newPage: number) => {
-      setPage(newPage);
+  const navigate = useNavigate()
 
-      const sortedRows = stableSort(postList, getComparator(order, orderBy));
-      const updatedRows = sortedRows.slice(
-        newPage * rowsPerPage,
-        newPage * rowsPerPage + rowsPerPage
-      );
-      setVisibleRows(updatedRows);
-    },
-    [order, orderBy, rowsPerPage, postList]
-  );
+  const handleClickDetails = (notice: NoticeType) => {
+    navigate(`/notice/${notice.noticeId}`, {
+      state: {
+        notice
+      }
+    })
+  }
 
-  const handleChangeRowsPerPage = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const updatedRowsPerPage = parseInt(event.target.value, 10);
-      setRowsPerPage(updatedRowsPerPage);
-
-      setPage(0);
-
-      const sortedRows = stableSort(postList, getComparator(order, orderBy));
-      const updatedRows = sortedRows.slice(
-        0 * updatedRowsPerPage,
-        0 * updatedRowsPerPage + updatedRowsPerPage
-      );
-      setVisibleRows(updatedRows);
-
-      // There is no layout jump to handle on the first page.
-      setPaddingHeight(0);
-    },
-    [order, orderBy, postList]
-  );
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={"medium"}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={postList.length}
-            />
-            <TableBody>
-              {visibleRows
-                ? visibleRows.map((row, index) => {
-                    const isItemSelected = isSelected(row.title);
-                    const labelId = `enhanced-table-checkbox-${index}`;
-
-                    return (
-                      <TableRow
-                        hover
-                        onClick={(event) => handleClick(event, row.title)}
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={row.title}
-                        selected={isItemSelected}
-                        sx={{ cursor: "pointer" }}
-                      >
-                        <TableCell
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="normal"
-                        >
-                          {row.title}
-                        </TableCell>
-                        <TableCell align="left">{row.date}</TableCell>
-                        <TableCell align="left">{row.publisher}</TableCell>
-                      </TableRow>
-                    );
-                  })
-                : null}
-              {paddingHeight > 0 && (
-                <TableRow
-                  style={{
-                    height: paddingHeight,
-                  }}
+    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+      <TableContainer sx={{ maxHeight: 440 }}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
                 >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={postList.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </Box>
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.noticeId}>
+                    {columns.map((column) => {
+                      if (column.id === 'details') {
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                              <IButton
+                                sx={{
+                                  width: '30%',
+                                  height: '50%',
+                                  fontSize: '1rem',
+                                }}
+                                onClick={() => handleClickDetails(row)}
+                              >
+                                详情
+                              </IButton>
+                          </TableCell>
+                        )
+                      }
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format 
+                            ? column.format(value)
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                    
+                  </TableRow>
+                );
+              })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper>
+    
   );
 }
+
+export default NoticesPanel;

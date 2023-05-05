@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import Page from "../../components/Page";
 import { postList as initList } from "../../_mock";
-import { NoticeType } from "../../types";
 import { useState } from "react";
 import IButton from "../../components/IButton";
 import { FormatDateAndTime, FormatDateToRecent } from "../../lib/Format";
@@ -26,7 +25,8 @@ const selectedCSS = Object.assign({}, generalCSS, {
 });
 
 const NoticesManage: React.FC = () => {
-  const [noticeList, setNoticeList] = useState<NoticeType[]>(initList);
+  // const [noticeList, setNoticeList] = useState<NoticeType[]>(initList);
+  const noticeList = initList
   const [selectedId, setSelectedId] = useState<string>(noticeList[0].noticeId);
 
   const selectedItem = noticeList.find((item) => item.noticeId === selectedId);
