@@ -1,6 +1,8 @@
 import { LeaveType } from "../../types";
 import { Card, CardContent, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { FormatDate } from "../../lib/Format";
+import LeaveApplyResultChip from "../../components/LeaveApplyResultChip";
 
 function LeaveHistoryItem(props: LeaveType) {
   return (
@@ -10,11 +12,9 @@ function LeaveHistoryItem(props: LeaveType) {
           {props.desc}
         </Typography>
         <Typography sx={{ mb: 1.5, mt: 1 }} variant="body2" color="text.secondary">
-          {props.date}
+          {FormatDate(props.date)}
         </Typography>
-        <Typography variant="body1">
-          {props.result}
-        </Typography>
+        <LeaveApplyResultChip result={ props.result }/>
       </CardContent>
     </Card>
   );

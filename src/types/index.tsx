@@ -57,7 +57,6 @@ export interface AttendType {
 export interface LeaveApplyType {
   leaveId: string;
   userId: string;
-  title: string;
   content: string;
   name: string;
   result: LeaveApplyResult;

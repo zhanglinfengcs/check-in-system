@@ -42,7 +42,7 @@ const LeaveForm: React.FC = () => {
         >
           <TextField
             id="outlined-multiline-static"
-            label="Description"
+            label="内容"
             multiline
             rows={4}
           />

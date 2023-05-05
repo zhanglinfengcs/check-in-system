@@ -1,8 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { LeaveType, LeaveApplyResult } from "../types";
 
-faker.locale = "zh_CN";
-
 function createResult(num: number) {
   if (num === 0) return LeaveApplyResult.Pending;
   else if (num === 1) return LeaveApplyResult.Approved;
@@ -13,7 +11,7 @@ function createLeave(): LeaveType {
   return {
     leaveId: faker.datatype.uuid(),
     desc: faker.lorem.paragraph(),
-    date: faker.date.recent().toDateString(),
+    date: faker.date.recent().getTime().toString(),
     result: createResult(faker.datatype.number({ min: 0, max: 2 })),
   };
 }

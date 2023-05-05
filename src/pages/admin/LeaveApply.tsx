@@ -5,6 +5,7 @@ import { leaveApplyList as initList } from "../../_mock";
 import IButton from "../../components/IButton";
 import LeaveApplyResultChip from "../../components/LeaveApplyResultChip";
 import { LeaveApplyType, LeaveApplyResult } from "../../types";
+import { FormatDate } from "../../lib/Format";
 
 const generalCSS = {
   borderRadius: "10px",
@@ -97,7 +98,7 @@ const LeaveApply: React.FC = () => {
                           gap: "10px",
                         }}
                       >
-                        {item.title}
+                        {/* {item.title} */}
                         <div>
                           <Stack
                             sx={{
@@ -111,14 +112,16 @@ const LeaveApply: React.FC = () => {
                             <Typography
                               sx={{ display: "inline" }}
                               component="span"
-                              variant="body2"
+                              variant="subtitle1"
                               color="text.primary"
                             >
                               {item.name}
                             </Typography>
                             <LeaveApplyResultChip result={item.result} />
                           </Stack>
-                          {item.date}
+                          <div className="text-sm text-gray-600 font-light">
+                            {FormatDate(item.date)}
+                          </div>
                         </div>
                       </Stack>
                     </ListItem>
@@ -143,14 +146,15 @@ const LeaveApply: React.FC = () => {
                 id="title"
                 className="font-bold text-gray-900 tracking-wider text-3xl text-center"
               >
-                {selectedItem.title}
+                {/* {selectedItem.title} */}
+                请假申请
               </div>
               <div
                 id="name"
                 className="flex flex-row justify-start items-center mt-16"
               >
                 <span className="font-medium text-gray-900 text-lg mr-2">
-                  Name:
+                  姓名:
                 </span>
                 {selectedItem.name}
                 <span className="font-normal text-gray-700 text-sm ml-2">
@@ -162,7 +166,7 @@ const LeaveApply: React.FC = () => {
                 className="flex flex-row justify-start items-center mt-2"
               >
                 <span className="font-medium text-gray-900 text-lg mr-2">
-                  Date:
+                  日期:
                 </span>
                 <div className="font-normal text-gray-900 text-sm mr-5">
                   {selectedItem.date}
@@ -170,15 +174,15 @@ const LeaveApply: React.FC = () => {
                 <LeaveApplyResultChip result={selectedItem.result} />
               </div>
 
-              <div id="content" className="font-normal text-gray-900 mt-10">
+              <div id="content" className="font-normal text-gray-900 mt-10 tracking-wide leading-8">
                 <span className="font-medium text-gray-900 text-lg mr-2">
-                  Content:
+                  理由:
                 </span>
                 {selectedItem.content}
               </div>
               <div
                 id="button-group"
-                className="flex flex-row justify-end items-center gap-4 mt-6"
+                className="flex flex-row justify-end items-center gap-4 mt-8"
               >
                 <IButton onClick={() => handleApprove(selectedItem.leaveId)}>
                   同意
