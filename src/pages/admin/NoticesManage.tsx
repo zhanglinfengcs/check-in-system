@@ -18,32 +18,25 @@ const NoticesManage: React.FC = () => {
 
   return (
     <Page title="Notices Manage">
+      <IButton onClick={toggleAddButton}>
+        {openAddForm === false ? "添加公告" : "取消添加"}
+      </IButton>
       {
         openAddForm === false ? 
         (
-          <>
-            <IButton onClick={toggleAddButton}>
-              添加公告
-            </IButton>
-            <NoticesManagePanel 
-              noticeList={noticeList}
-              setNoticeList={setNoticeList}
-              selectedId={selectedId}
-              setSelectedId={setSelectedId}
-            /> 
-          </>
+          <NoticesManagePanel 
+            noticeList={noticeList}
+            setNoticeList={setNoticeList}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+          /> 
         )
-        : (
-          <>
-            <IButton onClick={toggleAddButton}>
-              取消添加
-            </IButton>
-            <NoticeForm 
-              noticeList={noticeList}
-              setNoticeList={setNoticeList}
-              toggleAddButton={toggleAddButton}
-            />
-          </>
+        : (  
+          <NoticeForm 
+            noticeList={noticeList}
+            setNoticeList={setNoticeList}
+            toggleAddButton={toggleAddButton}
+          />
         )
       }
     </Page>

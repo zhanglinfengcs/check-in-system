@@ -14,6 +14,7 @@ function createApply(): LeaveApplyType {
     leaveId: faker.datatype.uuid(),
     userId: faker.datatype.uuid(),
     name: faker.name.fullName(),
+    title: faker.lorem.words(),
     content: faker.lorem.paragraph(),
     date: faker.date.recent().getTime().toString(),
     result: createResult(faker.datatype.number({ min: 0, max: 2 })),

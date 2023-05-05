@@ -8,6 +8,7 @@ export interface NoticeType {
 
 export interface LeaveType {
   leaveId: string;
+  title: string;
   desc: string;
   date: string;
   result: LeaveApplyResult;
@@ -57,6 +58,7 @@ export interface AttendType {
 export interface LeaveApplyType {
   leaveId: string;
   userId: string;
+  title: string;
   content: string;
   name: string;
   result: LeaveApplyResult;

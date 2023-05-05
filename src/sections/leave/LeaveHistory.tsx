@@ -4,23 +4,11 @@ import Typography from "@mui/material/Typography";
 import { FormatDate } from "../../lib/Format";
 import LeaveApplyResultChip from "../../components/LeaveApplyResultChip";
 
-function LeaveHistoryItem(props: LeaveType) {
-  return (
-    <Card sx={{ minWidth: 275, width: "100%" }}>
-      <CardContent>
-        <Typography variant="subtitle1" component="div">
-          {props.desc}
-        </Typography>
-        <Typography sx={{ mb: 1.5, mt: 1 }} variant="body2" color="text.secondary">
-          {FormatDate(props.date)}
-        </Typography>
-        <LeaveApplyResultChip result={ props.result }/>
-      </CardContent>
-    </Card>
-  );
+interface LeaveHistoryProps {
+  leaveList: LeaveType[];
 }
 
-function LeaveHistory({ props }: { props: LeaveType[] }) {
+const LeaveHistory: React.FC<LeaveHistoryProps> = ({ leaveList }) => {
   return (
     <Stack
       direction="column"
@@ -32,8 +20,23 @@ function LeaveHistory({ props }: { props: LeaveType[] }) {
         mb: 3,
       }}
     >
-      {props.map((item, index) => {
-        return <LeaveHistoryItem {...item} key={index} />;
+      {leaveList.map((item) => {
+        return (
+          <Card sx={{ minWidth: 275, width: "100%" }} key={item.leaveId}>
+            <CardContent>
+              <Typography variant="h5" component="div">
+                {item.title}
+              </Typography>
+              <Typography variant="subtitle1" component="div" sx={{mt: 2}}>
+                {item.desc}
+              </Typography>
+              <Typography sx={{ mb: 1.5, mt: 1 }} variant="body2" color="text.secondary">
+                {FormatDate(item.date)}
+              </Typography>
+              <LeaveApplyResultChip result={ item.result }/>
+            </CardContent>
+          </Card>
+        )
       })}
     </Stack>
   );

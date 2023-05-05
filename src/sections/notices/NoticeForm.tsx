@@ -12,13 +12,11 @@ const NoticeForm: React.FC<NoticeFormProps> = ( { noticeList, setNoticeList, tog
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const formDate = new FormData(event.currentTarget)
-    console.log(formDate.get('title'))
-    console.log(formDate.get('content'))
+    const formData = new FormData(event.currentTarget)
     setNoticeList([{
       noticeId: Date.now().toString(),
-      title: formDate.get('title') as string,
-      content: formDate.get('content') as string,
+      title: formData.get('title') as string,
+      content: formData.get('content') as string,
       createdTime: Date.now().toString(),
       editTime: Date.now().toString(), 
     }, ...noticeList])

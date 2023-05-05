@@ -89,7 +89,7 @@ const LeaveApply: React.FC = () => {
                           gap: "10px",
                         }}
                       >
-                        {/* {item.title} */}
+                        {item.title}
                         <div>
                           <Stack
                             sx={{

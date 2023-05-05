@@ -10,6 +10,7 @@ function createResult(num: number) {
 function createLeave(): LeaveType {
   return {
     leaveId: faker.datatype.uuid(),
+    title: faker.lorem.words(),
     desc: faker.lorem.paragraph(),
     date: faker.date.recent().getTime().toString(),
     result: createResult(faker.datatype.number({ min: 0, max: 2 })),
