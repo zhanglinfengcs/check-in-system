@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -14,7 +15,7 @@ import {
 import Page from "../../components/Page";
 import { Gender, UserType } from "../../types";
 import IButton from "../../components/IButton";
-import useUser from "../../hooks/useUser";
+import { useLocation } from "react-router-dom";
 
 const states = [
   {
@@ -39,23 +40,35 @@ const gender = [
 ];
 
 
-const Account: React.FC = ( ) => {
-  const { user } = useUser()
+const WorkerDetails: React.FC = ( ) => {
 
-  const [values, setValues] = useState<UserType>(
-    user as UserType
-    // {
-    //   userId: "00001",
-    //   name: "Visser",
-    //   password: "demo@devias.io",
-    //   phoneNum: "123456789",
-    //   gender: Gender.Male,
-    //   isStaff: IsStaff.Yes,
-    //   status: AttendSituation.Checked,
-    //   // "/public/profile.jpeg"
-    //   image: "",
-    // }
+  const location = useLocation();
+  console.log(location.state)
+
+  const [values, setValues] = useState<UserType>(    
+    location.state.worker
+    // "/public/profile.jpeg"
+    // image: "",
   );
+
+  const reader = new FileReader();
+  const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files as FileList;
+    // const imageObj = URL.createObjectURL(files[0]);
+    // setValues((prevState) => ({
+    //   ...prevState,
+    //   image: imageObj,
+    // }));
+
+    reader.readAsDataURL(files[0]);
+  };
+  reader.onloadend = () => {
+    setValues((prevState) => ({
+      ...prevState,
+      image: reader.result as string,
+    }));
+  };
+
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -68,16 +81,18 @@ const Account: React.FC = ( ) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('general user submit')
   };
 
   return (
     <Page title="账户">
+      <IButton onClick={() => window.history.back()}>
+        返回
+      </IButton>
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8,
+          py: 2,
           width: "100%",
         }}
       >
@@ -104,7 +119,7 @@ const Account: React.FC = ( ) => {
                   </Box>
                 </CardContent>
                 <Divider />
-                {/* <CardActions>
+                <CardActions>
                   <Button
                     variant="contained"
                     component="label"
@@ -117,7 +132,6 @@ const Account: React.FC = ( ) => {
                         backgroundColor: "#3730a3",
                       },
                     }}
-                    disabled={disabled}
                   >
                     上传照片
                     <input
@@ -128,7 +142,7 @@ const Account: React.FC = ( ) => {
                       onChange={(e) => handleUploadImage(e)}
                     />
                   </Button>
-                </CardActions> */}
+                </CardActions>
               </Card>
             </Grid>
             <Grid item xs={12} md={6} lg={8} ml={8}>
@@ -155,7 +169,6 @@ const Account: React.FC = ( ) => {
                             onChange={(e) => handleChange(e)}
                             required
                             value={values.userId}
-                            disabled
                           />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -167,7 +180,6 @@ const Account: React.FC = ( ) => {
                             required
                             type="password"
                             value={values.password}
-                            // disabled
                           />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -178,7 +190,6 @@ const Account: React.FC = ( ) => {
                             onChange={handleChange}
                             required
                             value={values.name}
-                            disabled
                           />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -188,7 +199,6 @@ const Account: React.FC = ( ) => {
                             name="phoneNum"
                             onChange={handleChange}
                             value={values.phoneNum}
-                            disabled
                           />
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -201,7 +211,6 @@ const Account: React.FC = ( ) => {
                             select
                             SelectProps={{ native: true }}
                             value={values.gender}
-                            disabled
                           >
                             {gender.map((option) => (
                               <option key={option.value} value={option.value}>
@@ -250,4 +259,4 @@ const Account: React.FC = ( ) => {
   );
 }
 
-export default Account;
+export default WorkerDetails;

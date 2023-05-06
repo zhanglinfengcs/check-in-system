@@ -16,6 +16,7 @@ import {
   WorkersManage,
 } from "../pages/admin";
 import AuthGuard from "../guards/AuthGuard.tsx";
+import WorkerDetails from "../sections/worker/WorkerDetails.tsx";
 
 const Router = () => {
   return useRoutes([
@@ -74,9 +75,9 @@ const Router = () => {
                   element: <WorkersManage />,
                 },
                 {
-                  path: "account/:userId",
-                  element: <Account />,
-                },
+                  path: "worker/details/:userId",
+                  element: <WorkerDetails />,
+                }
               ],
             },
           ],

@@ -9,8 +9,9 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { UserType } from "../../types";
 import IButton from "../../components/IButton";
-import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Column {
   id: "userId" | "name" | "gender" | "phoneNum" | "operate";
@@ -55,8 +56,8 @@ const WorkersTable: React.FC<WorkersTableProps> = ({
   workerList,
   setWorkerList,
 }) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
@@ -80,7 +81,14 @@ const WorkersTable: React.FC<WorkersTableProps> = ({
 
   const navigate = useNavigate();
   const handleClickDetails = (worker: UserType) => {
-    navigate(`/admin/account/${worker.userId}`);
+    console.log('go details')
+    navigate(`/admin/worker/details/${worker.userId}`, 
+      { 
+        state: {
+          worker: worker,
+        } 
+      }
+    ); 
   };
 
   const handleClickDelete = (worker: string) => {
@@ -90,6 +98,7 @@ const WorkersTable: React.FC<WorkersTableProps> = ({
 
   return (
     <>
+      
       <div
         id="search-bar-card"
         className="w-full h-20 bg-white relative rounded-lg shadow"
