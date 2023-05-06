@@ -10,13 +10,32 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import IButton from "../../components/IButton";
 import { useFormik } from "formik";
 import { loginSchema } from "../../schemas";
+import useUser from "../../hooks/useUser";
+import { useNavigate } from "react-router-dom";
+import { IsStaff } from "../../types";
 
 const theme = createTheme();
 
 const Login: React.FC = () => {
-  const onSubmit = () => {
-    console.log("submit");
-    setErrors({ userId: "工号不存在" });
+
+  const navigate = useNavigate()
+  const { login } = useUser() 
+  const onSubmit = async () => {
+    await login(values.userId, values.password).then((res) => {
+      console.log('login res: ', res)
+      if (res.status === 200) {
+        console.log("succeed");
+        const user = res.data
+        if (user.isStaff === IsStaff.Yes) {
+          navigate('/home')
+        } else {
+          navigate('/admin/dashboard')
+        }
+      } else {
+        console.log("failed");
+        setErrors({ userId: "工号或密码错误" })
+      }
+    })
   };
 
   const { values, errors, setErrors, touched, handleSubmit, handleChange } =
@@ -45,7 +64,7 @@ const Login: React.FC = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            登录
           </Typography>
           <Box
             component="form"

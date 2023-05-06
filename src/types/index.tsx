@@ -64,3 +64,9 @@ export interface LeaveApplyType {
   result: LeaveApplyResult;
   date: string;
 }
+
+export interface MResponseType {
+  status: number;
+  message: string;
+  data: UserType
+}
