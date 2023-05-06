@@ -57,6 +57,12 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
     setNoticeList(newList);
   };
 
+  const handleDelete = () => {
+    const newList = noticeList.filter((item) => item.noticeId !== selectedId);
+    setNoticeList(newList);
+    setSelectedId(newList[0].noticeId);
+  }
+
   return (
     <Paper
       elevation={2}
@@ -149,7 +155,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
             sx={{
               py: 2,
               px: 4,
-              width: "100%",
+              width: "80%",
               height: "100%",
               display: "flex",
               flexDirection: "column",
@@ -205,17 +211,28 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
                     "以前"}
                 </Typography>
               </Stack>
-              <IButton
-              sx={{
-                m: 1,
-                position: "absolute",
-                bottom: "10%",
-                right: "2%",
-              }}
-              onClick={handleSubmit}
-            >
-              提交
-            </IButton>
+              <Stack
+                sx={{
+                  m: 1,
+                  position: "absolute",
+                  bottom: "10%",
+                  right: "2%",
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: 2
+                }}
+              >
+                <IButton
+                  onClick={handleSubmit}
+                >
+                  提交
+                </IButton>
+                <IButton
+                  onClick={handleDelete}
+                >
+                  删除
+                </IButton>
+              </Stack>
             </Box>
           </Stack>
         )}
