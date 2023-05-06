@@ -1,46 +1,47 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import { UserType } from '../../types';
-import IButton from '../../components/IButton';
-import { useNavigate } from 'react-router-dom';
+import * as React from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import { UserType } from "../../types";
+import IButton from "../../components/IButton";
+import { useNavigate } from "react-router-dom";
+import { Stack } from "@mui/material";
 
 interface Column {
-  id: 'userId' | 'name' | 'gender' | 'phoneNum' | 'goDetails';
+  id: "userId" | "name" | "gender" | "phoneNum" | "operate";
   label: string;
   minWidth?: number;
-  align?: 'right' | 'center';
+  align?: "right" | "center";
   format?: (value: number) => string;
 }
 
 const columns: Column[] = [
-  { id: 'userId', label: 'UserId', minWidth: 170 },
-  { id: 'name', label: 'Name', minWidth: 100 },
+  { id: "userId", label: "UserId", minWidth: 170 },
+  { id: "name", label: "Name", minWidth: 100 },
   {
-    id: 'gender',
-    label: 'Gender',
+    id: "gender",
+    label: "Gender",
     minWidth: 170,
-    align: 'center',
+    align: "center",
   },
   {
-    id: 'phoneNum',
-    label: 'Phone Number',
+    id: "phoneNum",
+    label: "Phone Number",
     minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toLocaleString('en-US'),
+    align: "right",
+    format: (value: number) => value.toLocaleString("en-US"),
   },
   {
-    id: 'goDetails',
-    label: 'Go Details',
+    id: "operate",
+    label: "Operate",
     minWidth: 170,
-    align: 'center'
-  }
+    align: "center",
+  },
 ];
 
 interface WorkersTableProps {
@@ -49,7 +50,11 @@ interface WorkersTableProps {
   setWorkerList: React.Dispatch<React.SetStateAction<UserType[]>>;
 }
 
-const WorkersTable: React.FC<WorkersTableProps> = ({ initList, workerList, setWorkerList }) => {
+const WorkersTable: React.FC<WorkersTableProps> = ({
+  initList,
+  workerList,
+  setWorkerList,
+}) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -57,24 +62,35 @@ const WorkersTable: React.FC<WorkersTableProps> = ({ initList, workerList, setWo
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newList = initList.filter((worker) => worker.userId.includes(e.target.value) || worker.name.includes(e.target.value))
-    setWorkerList(newList)
-  }
+    const newList = initList.filter(
+      (worker) =>
+        worker.userId.includes(e.target.value) ||
+        worker.name.includes(e.target.value)
+    );
+    setWorkerList(newList);
+  };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleClickDetails = (worker: UserType) => {
-    navigate(`/admin/account/${worker.userId}`)
-  }
+    navigate(`/admin/account/${worker.userId}`);
+  };
+
+  const handleClickDelete = (worker: string) => {
+    const newList = workerList.filter((item) => item.userId !== worker);
+    setWorkerList(newList);
+  };
 
   return (
     <>
-              <div
+      <div
         id="search-bar-card"
         className="w-full h-20 bg-white relative rounded-lg shadow"
       >
@@ -106,73 +122,105 @@ const WorkersTable: React.FC<WorkersTableProps> = ({ initList, workerList, setWo
           />
         </div>
       </div>
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {workerList
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((worker) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={worker.userId}>
-                    {columns.map((column) => {
-                      if (column.id === 'goDetails') {
-                        return (
-                          <TableCell key={column.id} align={column.align}
-                            sx={{
-                              cursor: 'pointer',
-                            }}
-                          >
-                            <IButton
+      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {workerList
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((worker) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={worker.userId}
+                    >
+                      {columns.map((column) => {
+                        if (column.id === "operate") {
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
                               sx={{
-                                width: '60%',
-                                height: '100%',
+                                cursor: "pointer",
                               }}
-                              onClick={() => handleClickDetails(worker)}
-                            >详情</IButton>
+                            >
+                              <Stack
+                                sx={{
+                                  width: "100%",
+                                  height: "100%",
+                                  display: "flex",
+                                  flexDirection: "row",
+                                  justifyContent: "flex-end",
+                                  alignItems: "end",
+                                  gap: 1,
+                                }}
+                              >
+                                <IButton
+                                  sx={{
+                                    width: "10%",
+                                    height: "100%",
+                                  }}
+                                  onClick={() => handleClickDetails(worker)}
+                                >
+                                  详情
+                                </IButton>
+                                <IButton
+                                  sx={{
+                                    width: "10%",
+                                    height: "100%",
+                                  }}
+                                  onClick={() =>
+                                    handleClickDelete(worker.userId)
+                                  }
+                                >
+                                  删除
+                                </IButton>
+                              </Stack>
+                            </TableCell>
+                          );
+                        }
+                        const value = worker[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
                           </TableCell>
                         );
-                      }
-                      const value = worker[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={workerList.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={workerList.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
     </>
   );
-}
+};
 
 export default WorkersTable;

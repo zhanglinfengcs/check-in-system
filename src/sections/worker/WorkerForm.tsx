@@ -49,28 +49,29 @@ const WorkerForm: React.FC = () => {
   };
 
   reader.onloadend = () => {
-    setFieldValue('image', reader.result as string)
-  }
+    setFieldValue("image", reader.result as string);
+  };
 
   const onSubmit = () => {
-    console.log(values)
-  }
+    console.log(values);
+  };
 
-  const { values, setFieldValue, errors, touched, handleSubmit, handleChange } = useFormik({
-    initialValues: {
-      userId: "",
-      name: "",
-      password: "",
-      phoneNum: "",
-      gender: Gender.Male,
-      isStaff: IsStaff.Yes,
-      status: AttendSituation.Checked,
-      // "/public/profile.jpeg"
-      image: "",
-    },
-    validationSchema: addWorkerSchema,
-    onSubmit,
-  })
+  const { values, setFieldValue, errors, touched, handleSubmit, handleChange } =
+    useFormik({
+      initialValues: {
+        userId: "",
+        name: "",
+        password: "",
+        phoneNum: "",
+        gender: Gender.Male,
+        isStaff: IsStaff.Yes,
+        status: AttendSituation.Checked,
+        // "/public/profile.jpeg"
+        image: "",
+      },
+      validationSchema: addWorkerSchema,
+      onSubmit,
+    });
 
   return (
     <>
@@ -132,10 +133,7 @@ const WorkerForm: React.FC = () => {
               </Card>
             </Grid>
             <Grid item xs={12} md={6} lg={8} ml={8}>
-              <form
-                autoComplete="off"
-                onSubmit={handleSubmit}
-              >
+              <form autoComplete="off" onSubmit={handleSubmit}>
                 <Card
                   sx={{
                     p: 2,
@@ -243,6 +241,6 @@ const WorkerForm: React.FC = () => {
       </Box>
     </>
   );
-}
+};
 
 export default WorkerForm;
