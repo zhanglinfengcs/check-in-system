@@ -18,8 +18,11 @@ const NoticesManage: React.FC = () => {
   React.useEffect(() => {
     //TODO: fetch data from server
     setNoticeList(initList);
-    setSelectedId(initList[0]?.noticeId);
   }, [])
+
+  React.useEffect(() => {
+    setSelectedId(noticeList[0]?.noticeId);
+  }, [noticeList])
 
   const selectedItem = noticeList.find((item) => item.noticeId === selectedId);
 

@@ -13,6 +13,6 @@ function createNotice(): NoticeType {
   };
 }
 
-const noticeList = Array.from({ length: 20 }).map(() => createNotice());
+const noticeList = Array.from({ length: 2 }).map(() => createNotice());
 
 export default noticeList;
