@@ -44,7 +44,11 @@ interface WorkerFormProps {
   toggleAddButton: () => void;
 }
 
-const WorkerForm: React.FC<WorkerFormProps> = ({ workerList, setWorkerList, toggleAddButton }) => {
+const WorkerForm: React.FC<WorkerFormProps> = ({
+  workerList,
+  setWorkerList,
+  toggleAddButton,
+}) => {
   const reader = new FileReader();
 
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {

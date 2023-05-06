@@ -14,20 +14,20 @@ import { loginSchema } from "../../schemas";
 const theme = createTheme();
 
 const Login: React.FC = () => {
-
   const onSubmit = () => {
-    console.log('submit')
-    setErrors({userId: '工号不存在'})
-  }
+    console.log("submit");
+    setErrors({ userId: "工号不存在" });
+  };
 
-  const { values, errors, setErrors, touched, handleSubmit, handleChange } = useFormik({
-    initialValues: {
-      userId: "",
-      password: "",
-    },
-    validationSchema: loginSchema,
-    onSubmit,
-  })
+  const { values, errors, setErrors, touched, handleSubmit, handleChange } =
+    useFormik({
+      initialValues: {
+        userId: "",
+        password: "",
+      },
+      validationSchema: loginSchema,
+      onSubmit,
+    });
 
   return (
     <ThemeProvider theme={theme}>

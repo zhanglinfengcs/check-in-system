@@ -25,11 +25,11 @@ const Icon = (status: AttendSituation) => {
     case AttendSituation.Checked:
       return <CheckedIcon />;
     case AttendSituation.Unchecked:
-      return <UncheckedIcon />
+      return <UncheckedIcon />;
     default:
       return <PauseIcon />;
   }
-}
+};
 
 const Home: React.FC = () => {
   const { user } = useUser();
@@ -37,7 +37,14 @@ const Home: React.FC = () => {
   return (
     <Page title="Home">
       <div className="flex flex-row justify-start items-center gap-2">
-        <h1 className="text-xl font-bold">今日状态: {user?.status === AttendSituation.Checked ? "已签到" : user?.status === AttendSituation.Unchecked ? "未签到" : "请假"}</h1>
+        <h1 className="text-xl font-bold">
+          今日状态:{" "}
+          {user?.status === AttendSituation.Checked
+            ? "已签到"
+            : user?.status === AttendSituation.Unchecked
+            ? "未签到"
+            : "请假"}
+        </h1>
         {Icon((user as UserType).status)}
       </div>
       <Camera />

@@ -32,9 +32,15 @@ const MainLayout: React.FC = () => {
     <div className="w-screen h-screen grid xl:grid-cols-[1fr_4fr] 2xl:grid-cols-[1fr_6fr]">
       <nav>
         {isStaff === IsStaff.No ? (
-          <SideNav itemList={adminSideNavItems} currentUser={user as UserType}/>
+          <SideNav
+            itemList={adminSideNavItems}
+            currentUser={user as UserType}
+          />
         ) : (
-          <SideNav itemList={simpleSideNavItems} currentUser={user as UserType}/>
+          <SideNav
+            itemList={simpleSideNavItems}
+            currentUser={user as UserType}
+          />
         )}
       </nav>
       <main className=" my-3 mr-3 rounded-lg overflow-y-auto bg-gray-100">

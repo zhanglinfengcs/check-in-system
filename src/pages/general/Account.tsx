@@ -68,7 +68,7 @@ export default function Account() {
       ...prevState,
       image: reader.result as string,
     }));
-  }
+  };
 
   const [values, setValues] = useState<UserType>({
     userId: "00001",
@@ -82,17 +82,19 @@ export default function Account() {
     image: "",
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setValues((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
-  }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(values)
-  }
+    console.log(values);
+  };
 
   return (
     <Page title="账户">
@@ -256,7 +258,11 @@ export default function Account() {
                     </Box>
                   </CardContent>
                   <CardActions sx={{ justifyContent: "flex-end" }}>
-                    <IButton variant="contained" disabled={disabled} type="submit">
+                    <IButton
+                      variant="contained"
+                      disabled={disabled}
+                      type="submit"
+                    >
                       提交
                     </IButton>
                   </CardActions>

@@ -11,11 +11,15 @@ import { faker } from "@faker-js/faker";
 
 interface LeaveFormProps {
   leaveList: LeaveType[];
-  setLeaveList: React.Dispatch<React.SetStateAction<LeaveType[]>>
+  setLeaveList: React.Dispatch<React.SetStateAction<LeaveType[]>>;
   toggleAddButton: () => void;
 }
 
-const LeaveForm: React.FC<LeaveFormProps> = ({ leaveList, setLeaveList, toggleAddButton}) => {
+const LeaveForm: React.FC<LeaveFormProps> = ({
+  leaveList,
+  setLeaveList,
+  toggleAddButton,
+}) => {
   const [date, setDate] = React.useState<dayjs.Dayjs | null>(dayjs());
 
   function handleDateChange(newDate: dayjs.Dayjs | null) {
@@ -27,17 +31,21 @@ const LeaveForm: React.FC<LeaveFormProps> = ({ leaveList, setLeaveList, toggleAd
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget)
-    const willAddDate = date === null ? dayjs(Date.now()).valueOf().toString() : date.valueOf().toString();
-    setLeaveList(
-      [      {
-        leaveId: faker.datatype.uuid(), 
-        title: formData.get('title') as string,
-        desc: formData.get('content') as string,
+    const formData = new FormData(e.currentTarget);
+    const willAddDate =
+      date === null
+        ? dayjs(Date.now()).valueOf().toString()
+        : date.valueOf().toString();
+    setLeaveList([
+      {
+        leaveId: faker.datatype.uuid(),
+        title: formData.get("title") as string,
+        desc: formData.get("content") as string,
         date: willAddDate,
-        result: LeaveApplyResult.Pending
-      }, ...leaveList]
-    )
+        result: LeaveApplyResult.Pending,
+      },
+      ...leaveList,
+    ]);
     toggleAddButton();
   }
 
@@ -47,7 +55,7 @@ const LeaveForm: React.FC<LeaveFormProps> = ({ leaveList, setLeaveList, toggleAd
         width: "100%",
       }}
     >
-      <Typography variant="h5" sx={{ p: 3, textAlign: 'center' }}>
+      <Typography variant="h5" sx={{ p: 3, textAlign: "center" }}>
         请假申请
       </Typography>
       <Box
@@ -70,20 +78,20 @@ const LeaveForm: React.FC<LeaveFormProps> = ({ leaveList, setLeaveList, toggleAd
             pb: 3,
           }}
         >
-          <p className="text-lg text-left">标题</p> 
+          <p className="text-lg text-left">标题</p>
           <TextField
             id="outlined-multiline-static"
             label="标题"
             name="title"
             required
           />
-          <p className="text-lg text-left mt-2">内容</p> 
+          <p className="text-lg text-left mt-2">内容</p>
           <TextField
             id="outlined-multiline-static"
             label="内容"
             multiline
             rows={4}
-            name='content'
+            name="content"
             required
           />
           <DemoContainer components={["DatePicker"]}>
@@ -95,7 +103,9 @@ const LeaveForm: React.FC<LeaveFormProps> = ({ leaveList, setLeaveList, toggleAd
               }}
             />
           </DemoContainer>
-          <IButton type="submit" sx={{mt: 2}}>提交</IButton>
+          <IButton type="submit" sx={{ mt: 2 }}>
+            提交
+          </IButton>
         </Stack>
       </Box>
     </Paper>

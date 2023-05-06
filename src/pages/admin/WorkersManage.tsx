@@ -11,29 +11,25 @@ const WorkersManage: React.FC = () => {
 
   const toggleAddButton = () => {
     setOpenAddButton(!openAddButton);
-  } 
+  };
   return (
     <Page title="Workers Manage">
       <IButton onClick={toggleAddButton}>
         {openAddButton ? "Close" : "Add"}
       </IButton>
-      {
-        openAddButton
-        ? (
-          <WorkerForm 
-            workerList={workerList}
-            setWorkerList={setWorkerList}
-            toggleAddButton={toggleAddButton}
-          />
-        )
-        : (
-          <WorkersTable 
-            initList={initList}
-            workerList={workerList} 
-            setWorkerList={setWorkerList}
-          />
-        )
-      }
+      {openAddButton ? (
+        <WorkerForm
+          workerList={workerList}
+          setWorkerList={setWorkerList}
+          toggleAddButton={toggleAddButton}
+        />
+      ) : (
+        <WorkersTable
+          initList={initList}
+          workerList={workerList}
+          setWorkerList={setWorkerList}
+        />
+      )}
     </Page>
   );
 };

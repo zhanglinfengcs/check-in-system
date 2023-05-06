@@ -35,9 +35,7 @@ const columns: readonly Column[] = [
   },
 ];
 
-const CheckInRecordTable: React.FC<{ rows: AttendType[] }> = ({
-  rows,
-}) => {
+const CheckInRecordTable: React.FC<{ rows: AttendType[] }> = ({ rows }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 

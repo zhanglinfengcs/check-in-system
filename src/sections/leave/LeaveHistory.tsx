@@ -27,19 +27,23 @@ const LeaveHistory: React.FC<LeaveHistoryProps> = ({ leaveList }) => {
               <Typography variant="h5" component="div">
                 {item.title}
               </Typography>
-              <Typography variant="subtitle1" component="div" sx={{mt: 2}}>
+              <Typography variant="subtitle1" component="div" sx={{ mt: 2 }}>
                 {item.desc}
               </Typography>
-              <Typography sx={{ mb: 1.5, mt: 1 }} variant="body2" color="text.secondary">
+              <Typography
+                sx={{ mb: 1.5, mt: 1 }}
+                variant="body2"
+                color="text.secondary"
+              >
                 {FormatDate(item.date)}
               </Typography>
-              <LeaveApplyResultChip result={ item.result }/>
+              <LeaveApplyResultChip result={item.result} />
             </CardContent>
           </Card>
-        )
+        );
       })}
     </Stack>
   );
-}
+};
 
 export default LeaveHistory;

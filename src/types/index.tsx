@@ -3,7 +3,7 @@ export interface NoticeType {
   title: string;
   content: string;
   createdTime: string;
-  editTime: string,
+  editTime: string;
 }
 
 export interface LeaveType {
@@ -33,7 +33,7 @@ export interface UserType {
 
 export enum Gender {
   Male = 0,
-  Female = 1
+  Female = 1,
 }
 
 export enum IsStaff {

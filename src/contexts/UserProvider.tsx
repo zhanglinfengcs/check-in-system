@@ -9,7 +9,7 @@ interface UserContextType {
 const initUser: UserType = {
   userId: "1",
   name: "John Doe",
-  password: '123456789',
+  password: "123456789",
   phoneNum: "123456789",
   gender: Gender.Male,
   isStaff: IsStaff.No,

@@ -35,8 +35,11 @@ const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
     });
   });
 
-  function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, title: string) {
-    event.preventDefault()
+  function handleClick(
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    title: string
+  ) {
+    event.preventDefault();
     const newNavItems = [...navItems];
     newNavItems.map((item) => {
       if (item.current) {
@@ -47,12 +50,11 @@ const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
       }
     });
     setNavItems(newNavItems);
-    if (title === 'Account') {
-      navigate(`/account/${currentUser.userId}`)
+    if (title === "Account") {
+      navigate(`/account/${currentUser.userId}`);
     } else {
-      let path = ""
-      if (user?.isStaff === IsStaff.No)
-        path += "/admin"
+      let path = "";
+      if (user?.isStaff === IsStaff.No) path += "/admin";
       navigate(`${path}/${title.toLowerCase()}`);
     }
   }
@@ -65,7 +67,9 @@ const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
         </div>
         <div className="mt-5 mx-auto w-4/5 flex flex-col justify-start items-star bg-violet-100 px-4 py-4 rounded-lg">
           <div className="text-purple-800 font-bold">{currentUser.name}</div>
-          <div className="text-purple-800 font-semibold">{currentUser.isStaff === IsStaff.Yes ? "普通员工" : "管理员"}</div>
+          <div className="text-purple-800 font-semibold">
+            {currentUser.isStaff === IsStaff.Yes ? "普通员工" : "管理员"}
+          </div>
         </div>
       </div>
       <hr className="border-t-1 w-10/12 mx-auto border-solid" />

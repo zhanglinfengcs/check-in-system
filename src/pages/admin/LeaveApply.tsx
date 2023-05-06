@@ -8,7 +8,6 @@ import { LeaveApplyType, LeaveApplyResult } from "../../types";
 import { FormatDate } from "../../lib/Format";
 import { generalCSS, selectedCSS } from "../../styles";
 
-
 const LeaveApply: React.FC = () => {
   const [leaveApplyList, setLeaveApplyList] =
     useState<LeaveApplyType[]>(initList);
@@ -165,7 +164,10 @@ const LeaveApply: React.FC = () => {
                 <LeaveApplyResultChip result={selectedItem.result} />
               </div>
 
-              <div id="content" className="font-normal text-gray-900 mt-10 tracking-wide leading-8">
+              <div
+                id="content"
+                className="font-normal text-gray-900 mt-10 tracking-wide leading-8"
+              >
                 <span className="font-medium text-gray-900 text-lg mr-2">
                   理由:
                 </span>
