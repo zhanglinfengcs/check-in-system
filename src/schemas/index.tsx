@@ -23,5 +23,4 @@ export const addWorkerSchema = yup.object({
     .max(16, '密码长度在8-16位之间')
     .required('密码不能为空'),
   name: yup.string().required('姓名不能为空'),
-  image: yup.string().required('头像不能为空'),
 });

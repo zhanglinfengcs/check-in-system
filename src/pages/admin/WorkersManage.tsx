@@ -20,7 +20,11 @@ const WorkersManage: React.FC = () => {
       {
         openAddButton
         ? (
-          <WorkerForm />
+          <WorkerForm 
+            workerList={workerList}
+            setWorkerList={setWorkerList}
+            toggleAddButton={toggleAddButton}
+          />
         )
         : (
           <WorkersTable 
