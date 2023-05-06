@@ -20,6 +20,27 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+function getChineseTitle(item: string): string {
+  switch (item) {
+    case "Home":
+      return "主页";
+    case "Notices":
+      return "公告";
+    case "Leave":
+      return "请假";
+    case "Account":
+      return "账户";
+    case "Dashboard":
+      return "考勤情况";
+    case "Apply":
+      return "请假申请";
+    case "Workers":
+      return "人员管理";
+    default:
+      return "";
+  }
+}
+
 const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -68,7 +89,7 @@ const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
         <div className="mt-5 mx-auto w-4/5 flex flex-col justify-start items-star bg-violet-100 px-4 py-4 rounded-lg">
           <div className="text-purple-800 font-bold">{currentUser.name}</div>
           <div className="text-purple-800 font-semibold">
-            {currentUser.isStaff === IsStaff.Yes ? "普通员工" : "管理员"}
+            {currentUser.isStaff === IsStaff.Yes ? "员工" : "管理员"}
           </div>
         </div>
       </div>
@@ -89,7 +110,8 @@ const SideNav: React.FC<SideNavProps> = ({ itemList, currentUser }) => {
                 handleClick(e, item.title);
               }}
             >
-              {item.title}
+              {/* {item.title} */}
+              {getChineseTitle(item.title)}
             </Link>
           );
         })}
