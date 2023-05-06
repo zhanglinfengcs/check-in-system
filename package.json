@@ -21,11 +21,13 @@
     "@mui/utils": "^5.12.0",
     "@mui/x-date-pickers": "^6.3.0",
     "dayjs": "^1.11.7",
+    "formik": "^2.2.9",
     "isLeapYear": "link:dayjs/plugin/isLeapYear",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
-    "utils": "link:@mui/material/utils"
+    "utils": "link:@mui/material/utils",
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",

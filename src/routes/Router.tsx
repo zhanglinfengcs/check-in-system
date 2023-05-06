@@ -61,7 +61,7 @@ const Router = () => {
                   element: <WorkersManage />,
                 },
                 {
-                  path: "account/:id",
+                  path: "account/:userId",
                   element: <Account />,
                 },
               ],
