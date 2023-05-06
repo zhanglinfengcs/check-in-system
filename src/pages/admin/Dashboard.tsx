@@ -1,10 +1,10 @@
-import { useState } from "react";
+import * as React from "react";
 import Page from "../../components/Page";
 import {
   CheckInRecordSearchBar,
   CheckInRecordTable,
 } from "../../sections/dashboard";
-import { checkInRecordList as initList } from "../../_mock";
+import { checkInRecordList } from "../../_mock";
 import { AttendType, AttendSituation } from "../../types";
 import dayjs from "dayjs";
 
@@ -62,15 +62,23 @@ function isSameDay(date1: string | number, date2: string | number): boolean {
 }
 
 const Dashboard: React.FC = () => {
-  const [recordList, setRecordList] = useState<AttendType[]>(() => {
-    const newList = initList.filter((item) => {
-      return isSameDay(item.date, dayjs().valueOf());
-    });
-    return newList;
-  });
+  const [recordList, setRecordList] = React.useState<AttendType[]>([]);
+  const initListRef = React.useRef<AttendType[]>([]);
+
+  React.useEffect(() => {
+    //TODO: fetch recordList
+
+    initListRef.current = [...checkInRecordList]
+    setRecordList(() => {
+      const newList = initListRef.current.filter((item) => {
+        return isSameDay(item.date, dayjs().valueOf());
+      });
+      return newList;
+    })
+  }, [])
 
   function handleFilterStatusChange(payload: Payload) {
-    let newRecordList = filterInput(payload.input, initList);
+    let newRecordList = filterInput(payload.input, initListRef.current);
     newRecordList = filterStatus(payload.status, newRecordList);
     newRecordList = filterDate(payload.date, newRecordList);
     setRecordList(newRecordList);

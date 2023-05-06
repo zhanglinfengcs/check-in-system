@@ -92,6 +92,7 @@ const WorkersTable: React.FC<WorkersTableProps> = ({
   };
 
   const handleClickDelete = (worker: string) => {
+    //TODO: delete worker
     const newList = workerList.filter((item) => item.userId !== worker);
     setWorkerList(newList);
   };

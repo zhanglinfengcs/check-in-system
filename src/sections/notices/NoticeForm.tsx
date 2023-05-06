@@ -15,6 +15,7 @@ const NoticeForm: React.FC<NoticeFormProps> = ({
 }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    //TODO: add notice
     const formData = new FormData(event.currentTarget);
     setNoticeList([
       {

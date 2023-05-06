@@ -1,6 +1,6 @@
 import { List, ListItem, Paper, Stack, Typography } from "@mui/material";
 import Page from "../../components/Page";
-import React, { useState } from "react";
+import * as React from "react";
 import { leaveApplyList as initList } from "../../_mock";
 import IButton from "../../components/IButton";
 import LeaveApplyResultChip from "../../components/LeaveApplyResultChip";
@@ -10,10 +10,15 @@ import { generalCSS, selectedCSS } from "../../styles";
 
 const LeaveApply: React.FC = () => {
   const [leaveApplyList, setLeaveApplyList] =
-    useState<LeaveApplyType[]>(initList);
-  const [selectedId, setSelectedId] = useState<string>(
-    leaveApplyList[0].leaveId
-  );
+    React.useState<LeaveApplyType[]>([]);
+  const [selectedId, setSelectedId] = React.useState<string>("");
+
+  React.useEffect(() => {
+    //TODO: get leave apply list
+    setLeaveApplyList(initList);
+    setSelectedId(initList[0].leaveId);
+  }, [])
+  
   const selectedItem = leaveApplyList.find(
     (item) => item.leaveId === selectedId
   );
@@ -23,6 +28,7 @@ const LeaveApply: React.FC = () => {
   };
 
   const handleApprove = (id: string) => {
+    //TODO: send approve request
     const newList = leaveApplyList.map((item) => {
       if (item.leaveId === id) {
         item.result = LeaveApplyResult.Approved;
@@ -33,6 +39,7 @@ const LeaveApply: React.FC = () => {
   };
 
   const handleReject = (id: string) => {
+    //TODO: send reject request
     const newList = leaveApplyList.map((item) => {
       if (item.leaveId === id) {
         item.result = LeaveApplyResult.Rejected;

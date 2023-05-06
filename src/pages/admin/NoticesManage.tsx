@@ -1,3 +1,4 @@
+import * as React from "react";
 import Page from "../../components/Page";
 import { postList as initList } from "../../_mock";
 import { NoticeForm, NoticesManagePanel } from "../../sections/notices";
@@ -11,10 +12,17 @@ const NoticesManage: React.FC = () => {
     setOpenAddForm(!openAddForm);
   };
 
-  const [noticeList, setNoticeList] = useState<NoticeType[]>(initList);
-  const [selectedId, setSelectedId] = useState<string>(noticeList[0]?.noticeId);
+  const [noticeList, setNoticeList] = useState<NoticeType[]>([]);
+  const [selectedId, setSelectedId] = useState<string>("");
+
+  React.useEffect(() => {
+    //TODO: fetch data from server
+    setNoticeList(initList);
+    setSelectedId(initList[0]?.noticeId);
+  }, [])
 
   const selectedItem = noticeList.find((item) => item.noticeId === selectedId);
+
   return (
     <Page title="公告管理">
       <IButton onClick={toggleAddButton}>

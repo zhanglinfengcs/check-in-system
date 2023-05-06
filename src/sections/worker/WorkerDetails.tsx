@@ -81,6 +81,7 @@ const WorkerDetails: React.FC = ( ) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    //TODO: update worker
   };
 
   return (

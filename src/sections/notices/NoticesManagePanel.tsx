@@ -11,7 +11,6 @@ import IButton from "../../components/IButton";
 import { FormatDateAndTime, FormatDateToRecent } from "../../lib/Format";
 import { NoticeType } from "../../types";
 import { generalCSS, selectedCSS } from "../../styles";
-import { useState } from "react";
 
 interface NoticeManagePanelProps {
   noticeList: NoticeType[];
@@ -31,25 +30,36 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
 
   const handleListItemClick = (id: string) => {
     setSelectedId(id);
-    setCurrentValue(noticeList.find((item) => item.noticeId === id))
   };
 
-  const [currentValue, setCurrentValue] = useState(selectedItem);
   const handleSelectedItemChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     type: string
   ) => {
     if (type === "title") {
-      setCurrentValue({ ...currentValue, title: e.target.value } as NoticeType)
+      const newList = noticeList.map((item) => {
+        if (item.noticeId === selectedId) {
+          item.title = e.target.value;
+        }
+        return item;
+      })
+      setNoticeList(newList);
     } else if (type === "content") {
-      setCurrentValue({ ...currentValue, content: e.target.value } as NoticeType)
+      const newList = noticeList.map((item) => {
+        if (item.noticeId === selectedId) {
+          item.content = e.target.value;
+        }
+        return item;
+      })
+      setNoticeList(newList);
     }
   };
   const handleSubmit = () => {
+    //TODO: update notice 
     const newList = noticeList.map((item) => {
       if (item.noticeId === selectedId) {
-        item.title = currentValue?.title as string;
-        item.content = currentValue?.content as string;
+        item.title = selectedItem?.title as string;
+        item.content = selectedItem?.content as string;
         item.editTime = Date.now().toString();
       }
       return item;
@@ -58,10 +68,10 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
   };
 
   const handleDelete = () => {
+    //TODO: delete notice
     const newList = noticeList.filter((item) => item.noticeId !== selectedId);
     setNoticeList(newList);
     setSelectedId(newList[0]?.noticeId);
-    setCurrentValue(newList[0]);
   }
 
   return (
@@ -151,7 +161,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
             })}
           </List>
         </Stack>
-        {currentValue ? (
+        {selectedItem ? (
           <Stack
             sx={{
               py: 2,
@@ -176,7 +186,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
                 id="outlined-basic"
                 label="标题"
                 variant="outlined"
-                value={currentValue.title}
+                value={selectedItem.title}
                 onChange={(e) => handleSelectedItemChange(e, "title")}
               />
               <TextField
@@ -184,7 +194,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
                 label="内容"
                 multiline
                 rows={10}
-                value={currentValue.content}
+                value={selectedItem.content}
                 onChange={(e) => handleSelectedItemChange(e, "content")}
               />
               <Stack
@@ -204,11 +214,11 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
                   variant="subtitle2"
                   color="text.primary"
                 >
-                  {"创建于: " + FormatDateAndTime(currentValue.createdTime)}
+                  {"创建于: " + FormatDateAndTime(selectedItem.createdTime)}
                 </Typography>
                 <Typography variant="subtitle2">
                   {"最近一次编辑于: " +
-                    FormatDateToRecent(currentValue.editTime) +
+                    FormatDateToRecent(selectedItem.editTime) +
                     "以前"}
                 </Typography>
               </Stack>
