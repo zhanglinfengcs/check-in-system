@@ -12,7 +12,7 @@ const initUser: UserType = {
   password: "123456789",
   phoneNum: "123456789",
   gender: Gender.Male,
-  isStaff: IsStaff.No,
+  isStaff: IsStaff.Yes,
   status: AttendSituation.Checked,
 };
 

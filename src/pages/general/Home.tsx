@@ -35,9 +35,9 @@ const Home: React.FC = () => {
   const { user } = useUser();
 
   return (
-    <Page title="Home">
+    <Page title="签到">
       <div className="flex flex-row justify-start items-center gap-2">
-        <h1 className="text-xl font-bold">
+        <h1 className="text-xl font-medium">
           今日状态:{" "}
           {user?.status === AttendSituation.Checked
             ? "已签到"

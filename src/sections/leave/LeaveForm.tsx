@@ -76,16 +76,24 @@ const LeaveForm: React.FC<LeaveFormProps> = ({
             height: "100%",
             px: 3,
             pb: 3,
+            gap: 2
           }}
         >
-          <p className="text-lg text-left">标题</p>
+          <DemoContainer components={["DatePicker"]}>
+            <DatePicker
+              label="选择日期"
+              value={date}
+              onChange={(newDate) => {
+                handleDateChange(newDate);
+              }}
+            />
+          </DemoContainer>
           <TextField
             id="outlined-multiline-static"
             label="标题"
             name="title"
             required
           />
-          <p className="text-lg text-left mt-2">内容</p>
           <TextField
             id="outlined-multiline-static"
             label="内容"
@@ -93,17 +101,8 @@ const LeaveForm: React.FC<LeaveFormProps> = ({
             rows={4}
             name="content"
             required
-          />
-          <DemoContainer components={["DatePicker"]}>
-            <DatePicker
-              label="Controlled picker"
-              value={date}
-              onChange={(newDate) => {
-                handleDateChange(newDate);
-              }}
-            />
-          </DemoContainer>
-          <IButton type="submit" sx={{ mt: 2 }}>
+          /> 
+          <IButton type="submit" sx={{ mt: 1 }}>
             提交
           </IButton>
         </Stack>

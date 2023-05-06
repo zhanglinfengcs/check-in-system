@@ -16,30 +16,30 @@ interface Column {
   id: "title" | "createdTime" | "editTime" | "details";
   label: string;
   minWidth?: number;
-  align?: "right";
+  align?: "right" | "center";
   format?: (value: string) => string;
 }
 
 const columns: readonly Column[] = [
-  { id: "title", label: "Title", minWidth: 170 },
+  { id: "title", label: "标题", minWidth: 170 },
   {
     id: "createdTime",
-    label: "Created Time",
+    label: "创建时间",
     minWidth: 100,
     format: (value: string) => FormatDate(value),
   },
   {
     id: "editTime",
-    label: "Edit Time",
+    label: "最后一次编辑时间",
     minWidth: 170,
     align: "right",
     format: (value: string) => FormatDate(value),
   },
   {
     id: "details",
-    label: "Details",
+    label: "详情",
     minWidth: 170,
-    align: "right",
+    align: "center",
   },
 ];
 
