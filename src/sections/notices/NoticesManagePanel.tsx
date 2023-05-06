@@ -60,7 +60,8 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
   const handleDelete = () => {
     const newList = noticeList.filter((item) => item.noticeId !== selectedId);
     setNoticeList(newList);
-    setSelectedId(newList[0].noticeId);
+    setSelectedId(newList[0]?.noticeId);
+    setCurrentValue(newList[0]);
   }
 
   return (
@@ -150,7 +151,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
             })}
           </List>
         </Stack>
-        {currentValue && (
+        {currentValue ? (
           <Stack
             sx={{
               py: 2,
@@ -235,7 +236,13 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
               </Stack>
             </Box>
           </Stack>
-        )}
+        )
+        : (
+          <div className="text-center font-medium text-2xl mt-4">
+            无记录
+          </div>
+        )
+      }
       </Stack>
     </Paper>
   );

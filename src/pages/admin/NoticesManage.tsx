@@ -12,7 +12,7 @@ const NoticesManage: React.FC = () => {
   };
 
   const [noticeList, setNoticeList] = useState<NoticeType[]>(initList);
-  const [selectedId, setSelectedId] = useState<string>(noticeList[0].noticeId);
+  const [selectedId, setSelectedId] = useState<string>(noticeList[0]?.noticeId);
 
   const selectedItem = noticeList.find((item) => item.noticeId === selectedId);
   return (
