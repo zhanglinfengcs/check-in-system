@@ -20,28 +20,36 @@ const LeaveHistory: React.FC<LeaveHistoryProps> = ({ leaveList }) => {
         mb: 3,
       }}
     >
-      {leaveList.map((item) => {
-        return (
-          <Card sx={{ minWidth: 275, width: "100%" }} key={item.leaveId}>
-            <CardContent>
-              <Typography variant="h5" component="div">
-                {item.title}
-              </Typography>
-              <Typography variant="subtitle1" component="div" sx={{ mt: 2 }}>
-                {item.desc}
-              </Typography>
-              <Typography
-                sx={{ mb: 1.5, mt: 1 }}
-                variant="body2"
-                color="text.secondary"
-              >
-                {FormatDate(item.date)}
-              </Typography>
-              <LeaveApplyResultChip result={item.result} />
-            </CardContent>
-          </Card>
-        );
-      })}
+      {
+        leaveList.length > 0 ? 
+        leaveList.map((item) => {
+          return (
+            <Card sx={{ minWidth: 275, width: "100%" }} key={item.leaveId}>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  {item.title}
+                </Typography>
+                <Typography variant="subtitle1" component="div" sx={{ mt: 2 }}>
+                  {item.desc}
+                </Typography>
+                <Typography
+                  sx={{ mb: 1.5, mt: 1 }}
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  {FormatDate(item.date)}
+                </Typography>
+                <LeaveApplyResultChip result={item.result} />
+              </CardContent>
+            </Card>
+          );
+        })
+        : (
+          <Typography variant="h5" component="div">
+            无记录
+          </Typography>
+        )
+      }
     </Stack>
   );
 };

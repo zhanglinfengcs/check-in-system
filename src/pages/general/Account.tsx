@@ -41,21 +41,7 @@ const gender = [
 
 const Account: React.FC = ( ) => {
   const { user } = useUser()
-
-  const [values, setValues] = useState<UserType>(
-    user as UserType
-    // {
-    //   userId: "00001",
-    //   name: "Visser",
-    //   password: "demo@devias.io",
-    //   phoneNum: "123456789",
-    //   gender: Gender.Male,
-    //   isStaff: IsStaff.Yes,
-    //   status: AttendSituation.Checked,
-    //   // "/public/profile.jpeg"
-    //   image: "",
-    // }
-  );
+  const [values, setValues] = useState<UserType>(user as UserType);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -68,7 +54,9 @@ const Account: React.FC = ( ) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('general user submit')
+    const formData = new FormData(event.currentTarget);
+    console.log(formData.get("password"))
+    // TODO: update user password by general user
   };
 
   return (

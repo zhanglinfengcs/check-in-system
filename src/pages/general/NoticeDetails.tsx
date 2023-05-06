@@ -24,7 +24,7 @@ const NoticeDetails: React.FC = () => {
         <span className="mt-2 text-sm text-gray-600 block">
           {`最后编辑于: ${FormatDateAndTime(notice.editTime)}`}
         </span>
-        <p className="mt-8 w-4/5 font-medium text-lg">{notice.content}</p>
+        <p className="mt-8 w-4/5 text-lg">{notice.content}</p>
       </div>
     </Page>
   );

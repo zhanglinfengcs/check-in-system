@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Page from "../../components/Page.tsx";
 import { LeaveForm, LeaveHistory } from "../../sections/leave";
 import { leaveHistoryList as initList } from "../../_mock";
@@ -11,7 +11,11 @@ const Leave: React.FC = () => {
     setOpenAddForm(!openAddForm);
   };
 
-  const [leaveList, setLeaveList] = useState<LeaveType[]>(initList);
+  const [leaveList, setLeaveList] = useState<LeaveType[]>([]);
+  useEffect(() => {
+    //TODO: fetch leaveList
+    setLeaveList(initList);
+  }, [])
 
   return (
     <Page title="请假">

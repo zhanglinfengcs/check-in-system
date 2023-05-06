@@ -18,6 +18,7 @@ const Camera: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   function handleCheckIn() {
+    //TODO: check in logic, send img(base64) to backend
     console.log(imgRef.current?.src);
   }
 

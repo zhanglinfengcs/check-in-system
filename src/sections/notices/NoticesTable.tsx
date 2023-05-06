@@ -43,11 +43,11 @@ const columns: readonly Column[] = [
   },
 ];
 
-interface NoticesPanelProps {
+interface NoticesTableProps {
   props: NoticeType[];
 }
 
-const NoticesPanel: React.FC<NoticesPanelProps> = ({ props }) => {
+const NoticesTable: React.FC<NoticesTableProps> = ({ props }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const rows = props;
@@ -144,4 +144,4 @@ const NoticesPanel: React.FC<NoticesPanelProps> = ({ props }) => {
   );
 };
 
-export default NoticesPanel;
+export default NoticesTable;

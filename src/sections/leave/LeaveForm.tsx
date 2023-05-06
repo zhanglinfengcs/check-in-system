@@ -36,12 +36,16 @@ const LeaveForm: React.FC<LeaveFormProps> = ({
       date === null
         ? dayjs(Date.now()).valueOf().toString()
         : date.valueOf().toString();
+
+    formData.append("date", willAddDate);
+    //TODO: add leave apply request
+
     setLeaveList([
       {
         leaveId: faker.datatype.uuid(),
         title: formData.get("title") as string,
         desc: formData.get("content") as string,
-        date: willAddDate,
+        date: formData.get("date") as string,
         result: LeaveApplyResult.Pending,
       },
       ...leaveList,
