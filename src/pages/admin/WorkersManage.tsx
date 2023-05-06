@@ -13,9 +13,9 @@ const WorkersManage: React.FC = () => {
     setOpenAddButton(!openAddButton);
   };
   return (
-    <Page title="Workers Manage">
+    <Page title="人员管理">
       <IButton onClick={toggleAddButton}>
-        {openAddButton ? "Close" : "Add"}
+        {openAddButton ? "取消添加" : "添加人员"}
       </IButton>
       {openAddButton ? (
         <WorkerForm

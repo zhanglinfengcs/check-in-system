@@ -1,12 +1,12 @@
 export const generalCSS = {
-  borderRadius: "10px",
+  borderRadius: "8px",
   ":hover": {
     // backgroundColor: "#ede9fe",
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#e2e8f0",
     transition: "all 0.3s ease",
   },
 };
 export const selectedCSS = Object.assign({}, generalCSS, {
   // backgroundColor: "#ede9fe",
-  backgroundColor: "#F5F5F5",
+  backgroundColor: "#e2e8f0",
 });

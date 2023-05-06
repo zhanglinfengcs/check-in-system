@@ -43,8 +43,8 @@ const LeaveApply: React.FC = () => {
   };
 
   return (
-    <Page title="Apply">
-      <Paper elevation={2} sx={{ width: "100%", height: "500px" }}>
+    <Page title="请假申请">
+      <Paper elevation={2} sx={{ width: "100%", height: "600px", borderRadius: '8px', overflow: 'hidden'}}>
         <Stack
           sx={{
             flexDirection: "row",
@@ -71,7 +71,7 @@ const LeaveApply: React.FC = () => {
             >
               {leaveApplyList?.map((item) => {
                 return (
-                  <div className="p-2 mr-1" key={item.leaveId}>
+                  <div className="p-1 mr-1" key={item.leaveId}>
                     <ListItem
                       alignItems="flex-start"
                       sx={
@@ -88,7 +88,9 @@ const LeaveApply: React.FC = () => {
                           gap: "10px",
                         }}
                       >
-                        {item.title}
+                        <p className="text-lg font-medium text-gray-900 leading-80">
+                          {item.title}
+                        </p>
                         <div>
                           <Stack
                             sx={{
@@ -103,15 +105,20 @@ const LeaveApply: React.FC = () => {
                               sx={{ display: "inline" }}
                               component="span"
                               variant="subtitle1"
-                              color="text.primary"
+                              color="text.secondary"
                             >
                               {item.name}
                             </Typography>
                             <LeaveApplyResultChip result={item.result} />
                           </Stack>
-                          <div className="text-sm text-gray-600 font-light">
-                            {FormatDate(item.date)}
-                          </div>
+                            <Typography
+                              sx={{ display: "inline" }}
+                              component="span"
+                              variant="subtitle1"
+                              color="text.secondary"
+                            >
+                              {FormatDate(item.date)}
+                            </Typography>
                         </div>
                       </Stack>
                     </ListItem>
@@ -136,8 +143,7 @@ const LeaveApply: React.FC = () => {
                 id="title"
                 className="font-bold text-gray-900 tracking-wider text-3xl text-center"
               >
-                {/* {selectedItem.title} */}
-                请假申请
+                {selectedItem.title}
               </div>
               <div
                 id="name"
@@ -148,7 +154,7 @@ const LeaveApply: React.FC = () => {
                 </span>
                 {selectedItem.name}
                 <span className="font-normal text-gray-700 text-sm ml-2">
-                  {selectedItem.userId}
+                  @{selectedItem.userId}
                 </span>
               </div>
               <div
@@ -159,7 +165,7 @@ const LeaveApply: React.FC = () => {
                   日期:
                 </span>
                 <div className="font-normal text-gray-900 text-sm mr-5">
-                  {selectedItem.date}
+                  {FormatDate(selectedItem.date)}
                 </div>
                 <LeaveApplyResultChip result={selectedItem.result} />
               </div>

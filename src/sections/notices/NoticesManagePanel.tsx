@@ -11,12 +11,14 @@ import IButton from "../../components/IButton";
 import { FormatDateAndTime, FormatDateToRecent } from "../../lib/Format";
 import { NoticeType } from "../../types";
 import { generalCSS, selectedCSS } from "../../styles";
+import { useState } from "react";
 
 interface NoticeManagePanelProps {
   noticeList: NoticeType[];
   setNoticeList: React.Dispatch<React.SetStateAction<NoticeType[]>>;
   selectedId: string;
   setSelectedId: React.Dispatch<React.SetStateAction<string>>;
+  selectedItem: NoticeType | undefined;
 }
 
 const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
@@ -24,40 +26,30 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
   setNoticeList,
   selectedId,
   setSelectedId,
+  selectedItem,
 }) => {
-  const selectedItem = noticeList.find((item) => item.noticeId === selectedId);
 
   const handleListItemClick = (id: string) => {
     setSelectedId(id);
+    setCurrentValue(noticeList.find((item) => item.noticeId === id))
   };
 
+  const [currentValue, setCurrentValue] = useState(selectedItem);
   const handleSelectedItemChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     type: string
   ) => {
     if (type === "title") {
-      const newList = noticeList.map((item) => {
-        if (item.noticeId === selectedId) {
-          item.title = e.target.value;
-        }
-        return item;
-      });
-      setNoticeList(newList);
+      setCurrentValue({ ...currentValue, title: e.target.value } as NoticeType)
     } else if (type === "content") {
-      const newList = noticeList.map((item) => {
-        if (item.noticeId === selectedId) {
-          item.content = e.target.value;
-        }
-        return item;
-      });
-      setNoticeList(newList);
+      setCurrentValue({ ...currentValue, content: e.target.value } as NoticeType)
     }
   };
   const handleSubmit = () => {
     const newList = noticeList.map((item) => {
       if (item.noticeId === selectedId) {
-        item.title = selectedItem?.title as string;
-        item.content = selectedItem?.content as string;
+        item.title = currentValue?.title as string;
+        item.content = currentValue?.content as string;
         item.editTime = Date.now().toString();
       }
       return item;
@@ -66,7 +58,15 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
   };
 
   return (
-    <Paper elevation={2} sx={{ width: "100%", height: "500px" }}>
+    <Paper
+      elevation={2}
+      sx={{
+        width: "100%",
+        height: "600px",
+        borderRadius: "8px",
+        overflow: "hidden",
+      }}
+    >
       <Stack
         sx={{
           flexDirection: "row",
@@ -108,15 +108,18 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
                         gap: "5px",
                       }}
                     >
-                      {item.title}
+                      <p className="text-lg font-medium text-gray-900 leading-80">
+                        {item.title}
+                      </p>
                       <div>
                         <Stack
                           sx={{
                             display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "start",
                             mt: 1,
+                            gap: "2px",
                           }}
                         >
                           <Typography
@@ -127,12 +130,12 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
                           >
                             {"创建于: " + FormatDateAndTime(item.createdTime)}
                           </Typography>
+                          <Typography variant="subtitle2">
+                            {"最近一次编辑于: " +
+                              FormatDateToRecent(item.editTime) +
+                              "以前"}
+                          </Typography>
                         </Stack>
-                        <Typography variant="subtitle2">
-                          {"最近一次编辑于: " +
-                            FormatDateToRecent(item.editTime) +
-                            "以前"}
-                        </Typography>
                       </div>
                     </Stack>
                   </ListItem>
@@ -141,7 +144,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
             })}
           </List>
         </Stack>
-        {selectedItem && (
+        {currentValue && (
           <Stack
             sx={{
               py: 2,
@@ -164,30 +167,45 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
             >
               <TextField
                 id="outlined-basic"
-                label="Title"
+                label="标题"
                 variant="outlined"
-                value={selectedItem.title}
+                value={currentValue.title}
                 onChange={(e) => handleSelectedItemChange(e, "title")}
               />
-            </Box>
-            <Box
-              component="form"
-              sx={{
-                "& .MuiTextField-root": { m: 1, width: "100%" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
               <TextField
                 id="outlined-multiline-static"
-                label="Content"
+                label="内容"
                 multiline
                 rows={10}
-                value={selectedItem.content}
+                value={currentValue.content}
                 onChange={(e) => handleSelectedItemChange(e, "content")}
               />
-            </Box>
-            <IButton
+              <Stack
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "start",
+                  mt: 1,
+                  ml: 1,
+                  gap: "2px",
+                }}
+              >
+                <Typography
+                  sx={{ display: "inline" }}
+                  component="span"
+                  variant="subtitle2"
+                  color="text.primary"
+                >
+                  {"创建于: " + FormatDateAndTime(currentValue.createdTime)}
+                </Typography>
+                <Typography variant="subtitle2">
+                  {"最近一次编辑于: " +
+                    FormatDateToRecent(currentValue.editTime) +
+                    "以前"}
+                </Typography>
+              </Stack>
+              <IButton
               sx={{
                 m: 1,
                 position: "absolute",
@@ -198,6 +216,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
             >
               提交
             </IButton>
+            </Box>
           </Stack>
         )}
       </Stack>

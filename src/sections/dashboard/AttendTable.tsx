@@ -19,17 +19,17 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: "userId", label: "ID", minWidth: 170 },
-  { id: "name", label: "Name", minWidth: 100, align: "center" },
+  { id: "userId", label: "工号", minWidth: 170 },
+  { id: "name", label: "姓名", minWidth: 100, align: "center" },
   {
     id: "date",
-    label: "Date",
+    label: "日期",
     minWidth: 170,
     align: "center",
   },
   {
     id: "status",
-    label: "Status",
+    label: "考勤",
     minWidth: 170,
     align: "center",
   },

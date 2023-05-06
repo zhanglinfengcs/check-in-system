@@ -21,24 +21,24 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: "userId", label: "UserId", minWidth: 170 },
-  { id: "name", label: "Name", minWidth: 100 },
+  { id: "userId", label: "工号", minWidth: 170 },
+  { id: "name", label: "姓名", minWidth: 100 },
   {
     id: "gender",
-    label: "Gender",
+    label: "性别",
     minWidth: 170,
     align: "center",
   },
   {
     id: "phoneNum",
-    label: "Phone Number",
+    label: "电话号码",
     minWidth: 170,
     align: "right",
     format: (value: number) => value.toLocaleString("en-US"),
   },
   {
     id: "operate",
-    label: "Operate",
+    label: "操作",
     minWidth: 170,
     align: "center",
   },
@@ -116,7 +116,7 @@ const WorkersTable: React.FC<WorkersTableProps> = ({
             type="text"
             name="search"
             id="search"
-            placeholder="ID / Name"
+            placeholder="工号 / 姓名"
             className="inline-block w-full h-9 outline-none"
             onChange={(e) => handleInputChange(e)}
           />

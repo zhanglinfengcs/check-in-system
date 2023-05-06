@@ -76,7 +76,7 @@ const Dashboard: React.FC = () => {
     setRecordList(newRecordList);
   }
   return (
-    <Page title="Dashboard">
+    <Page title="考勤情况">
       <CheckInRecordSearchBar handleChange={handleFilterStatusChange} />
       <CheckInRecordTable rows={recordList} />
     </Page>

@@ -86,7 +86,7 @@ const CheckInRecordSearchBar: React.FC<{
         >
           <TextField
             id="outlined-basic"
-            label="ID / Name"
+            label="工号 / 姓名"
             variant="outlined"
             value={inputValue}
             onChange={(event) => handleInputChange(event)}
@@ -94,7 +94,7 @@ const CheckInRecordSearchBar: React.FC<{
         </Box>
         <Box sx={{ minWidth: 120 }}>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Status</InputLabel>
+            <InputLabel id="demo-simple-select-label">考勤</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -102,10 +102,10 @@ const CheckInRecordSearchBar: React.FC<{
               label="Status"
               onChange={handleStatusChange}
             >
-              <MenuItem value={-1}>All</MenuItem>
-              <MenuItem value={AttendSituation.Unchecked}>Unchecked</MenuItem>
-              <MenuItem value={AttendSituation.Checked}>Checked</MenuItem>
-              <MenuItem value={AttendSituation.Leave}>Leave</MenuItem>
+              <MenuItem value={-1}>所有</MenuItem>
+              <MenuItem value={AttendSituation.Unchecked}>未签到</MenuItem>
+              <MenuItem value={AttendSituation.Checked}>已签到</MenuItem>
+              <MenuItem value={AttendSituation.Leave}>请假</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -118,7 +118,7 @@ const CheckInRecordSearchBar: React.FC<{
           >
             <DemoContainer components={["DatePicker"]}>
               <DatePicker
-                label="Controlled picker"
+                label="选择日期"
                 value={date}
                 onChange={(newDate) => {
                   handleDateChange(newDate);
