@@ -16,9 +16,9 @@ import { generalCSS, selectedCSS } from "../../styles";
 interface NoticeManagePanelProps {
   noticeList: NoticeType[];
   setNoticeList: React.Dispatch<React.SetStateAction<NoticeType[]>>;
-  selectedId: string;
-  setSelectedId: React.Dispatch<React.SetStateAction<string>>;
-  selectedItem: NoticeType | undefined;
+  selectedId: string | null;
+  setSelectedId: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedItem: NoticeType | null;
 }
 
 const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
@@ -28,17 +28,18 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
   setSelectedId,
   selectedItem,
 }) => {
+
   const handleListItemClick = (id: string) => {
     setSelectedId(id);
   };
 
-  const [currentNotice, setCurrentNotice] = React.useState<NoticeType | undefined>(selectedItem);
-  console.log('currentNotice', currentNotice)
+  const [currentNotice, setCurrentNotice] = React.useState<NoticeType | null>(selectedItem);
+
   React.useEffect(() => {
     setCurrentNotice(selectedItem);
 
     return () => {
-      setCurrentNotice(undefined);
+      setCurrentNotice(null);
     }
   }, [selectedItem])
 
@@ -54,23 +55,73 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
   };
 
   const handleSubmit = () => {
-    //TODO: update notice
-    const newList = noticeList.map((item) => {
-      if (item.noticeId === selectedId) {
-        item.title = currentNotice?.title as string;
-        item.content = currentNotice?.content as string;
-        item.editTime = Date.now().toString();
+    if (currentNotice === null) return
+
+    const formData = new FormData();
+    formData.append('noticeId', currentNotice.noticeId as string)
+    formData.append('title', currentNotice.title as string)
+    formData.append('content', currentNotice.content as string)
+    formData.append('editTime', Date.now().toString())
+
+    async function updateNotice() {
+      const response = await fetch("http://127.0.0.1:8000/notice", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+      })
+      const data = await response.json()
+      console.log('update notice data', data)
+      if (data.status === 200) {
+        const newList = noticeList.map((item) => {
+          if (item.noticeId === selectedId) {
+            item.title = currentNotice?.title as string;
+            item.content = currentNotice?.content as string;
+            item.editTime = Date.now().toString();
+          }
+          return item;
+        });
+        setNoticeList(newList);
+        setCurrentNotice({...currentNotice, editTime: Date.now().toString()} as NoticeType)
+      } else {
+        console.log('update notice failed')
       }
-      return item;
-    });
-    setNoticeList(newList);
+    }
+
+    updateNotice()
   };
 
   const handleDelete = () => {
-    //TODO: delete notice
-    const newList = noticeList.filter((item) => item.noticeId !== selectedId);
-    setNoticeList(newList);
-    setSelectedId(newList[0]?.noticeId);
+    if (selectedId === null) return
+
+    const formData = new FormData();
+    formData.append('noticeId', selectedId)
+
+    async function deleteNotice() {
+      const response = await fetch("http://127.0.0.1:8000/notice", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+      })
+
+      const data = await response.json()
+      console.log('delete notice data', data)
+      if (data.status === 200) {
+        const newList = noticeList.filter((item) => item.noticeId !== selectedId);
+        setNoticeList(newList);
+        let nextSelectedId = null
+        if (newList.length > 0)
+          nextSelectedId = newList[0].noticeId
+        setSelectedId(nextSelectedId)
+      } else {
+        console.log('delete notice failed')
+      }
+    }
+
+    deleteNotice()
   };
 
   return (
@@ -95,7 +146,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
         >
           <Stack
             sx={{
-              width: "30%",
+              width: "40%",
               height: "100%",
               flexDirection: "column",
               overflow: "auto",
@@ -168,7 +219,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
               sx={{
                 py: 2,
                 px: 4,
-                width: "70%",
+                width: "100%",
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",

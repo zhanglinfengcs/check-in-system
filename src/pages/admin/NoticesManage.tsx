@@ -13,18 +13,33 @@ const NoticesManage: React.FC = () => {
   };
 
   const [noticeList, setNoticeList] = useState<NoticeType[]>([]);
-  const [selectedId, setSelectedId] = useState<string>("");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   React.useEffect(() => {
-    //TODO: fetch data from server
-    setNoticeList(initList);
+    async function getNoticeList() {
+      const res = await fetch("http://127.0.0.1:8000/notice");
+      const data = await res.json();
+      console.log('fetch notice list', data)
+      if (data.status === 200) {
+        setNoticeList(data.data);
+        if (data.data.length > 0) 
+          setSelectedId(data.data[0].noticeId);
+      } else {
+        console.log(data.msg);
+      }
+    }
+
+    getNoticeList();
   }, [])
 
-  React.useEffect(() => {
-    setSelectedId(noticeList[0]?.noticeId);
-  }, [noticeList])
-
-  const selectedItem = noticeList.find((item) => item.noticeId === selectedId);
+  let selectedItem = null
+  if (selectedId !== null && noticeList.length > 0) {
+    const findRes = noticeList.find((item) => item.noticeId === selectedId)
+    if (findRes !== undefined)
+      selectedItem = findRes;
+    else
+      selectedItem = null
+  }
 
   return (
     <Page title="公告管理">
@@ -43,6 +58,7 @@ const NoticesManage: React.FC = () => {
         <NoticeForm
           noticeList={noticeList}
           setNoticeList={setNoticeList}
+          setSelectedId={setSelectedId}
           toggleAddButton={toggleAddButton}
         />
       )}

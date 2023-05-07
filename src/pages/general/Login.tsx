@@ -19,23 +19,37 @@ const theme = createTheme();
 const Login: React.FC = () => {
 
   const navigate = useNavigate()
-  const { login } = useUser() 
-  const onSubmit = async () => {
-    await login(values.userId, values.password).then((res) => {
-      console.log('login res: ', res)
-      if (res.status === 200) {
-        console.log("succeed");
-        const user = res.data
-        if (user.isStaff === IsStaff.Yes) {
-          navigate('/home')
+  const { setUser } = useUser() 
+  const onSubmit = () => {
+    async function login() {
+      const formData = new FormData();
+      formData.append('userId', values.userId);
+      formData.append('password', values.password);
+      const res = await fetch('http://127.0.0.1:8000/face/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData
+      })
+      const data = await res.json();
+      console.log('login data', data)
+        if (data.status === 200) {
+          console.log("succeed");
+          const user = data.data
+          setUser(user)
+          if (user.isStaff === IsStaff.Yes) {
+            navigate('/home')
+          } else {
+            navigate('/admin/dashboard')
+          }
         } else {
-          navigate('/admin/dashboard')
+          console.log("failed");
+          setErrors({ userId: "工号或密码错误" })
         }
-      } else {
-        console.log("failed");
-        setErrors({ userId: "工号或密码错误" })
-      }
-    })
+    }
+
+    login()
   };
 
   const { values, errors, setErrors, touched, handleSubmit, handleChange } =

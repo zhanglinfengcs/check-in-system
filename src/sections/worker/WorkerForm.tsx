@@ -15,6 +15,7 @@ import { AttendSituation, Gender, IsStaff, UserType } from "../../types";
 import IButton from "../../components/IButton";
 import { useFormik } from "formik";
 import { addWorkerSchema } from "../../schemas";
+import { RemoveTypeFromBase64 } from "../../lib/Convert";
 
 const states = [
   {
@@ -59,13 +60,42 @@ const WorkerForm: React.FC<WorkerFormProps> = ({
   };
 
   reader.onloadend = () => {
-    setFieldValue("image", reader.result as string);
+    const willDisplayAvatar = reader.result
+    setFieldValue("image", willDisplayAvatar);
   };
 
   const onSubmit = () => {
-    //TODO: add worker
-    setWorkerList([...workerList, values]);
-    toggleAddButton();
+    const formData = new FormData();
+    formData.append("userId", values.userId);
+    formData.append("name", values.name);
+    formData.append("password", values.password);
+    formData.append("phoneNum", values.phoneNum);
+    formData.append("gender", values.gender.toString());
+    formData.append("isStaff", values.isStaff.toString());
+    const willSendImage = RemoveTypeFromBase64(values.image === undefined ? "" : values.image);
+    formData.append("image", willSendImage as string);
+
+    async function addWorker() {
+      const res = await fetch("http://127.0.0.1:8000/face/home/adduser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+      })
+
+      const data = await res.json()
+      console.log('add worker', data)
+
+      if (data.status === 200) {
+        setWorkerList([...workerList, values]);
+        toggleAddButton();
+      } else {
+        console.log(data.msg)
+      }
+    }
+
+    addWorker()
   };
 
   const { values, setFieldValue, errors, touched, handleSubmit, handleChange } =
