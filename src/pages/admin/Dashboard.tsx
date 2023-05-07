@@ -66,15 +66,26 @@ const Dashboard: React.FC = () => {
   const initListRef = React.useRef<AttendType[]>([]);
 
   React.useEffect(() => {
-    //TODO: fetch recordList
-
-    initListRef.current = [...checkInRecordList]
-    setRecordList(() => {
-      const newList = initListRef.current.filter((item) => {
-        return isSameDay(item.date, dayjs().valueOf());
-      });
-      return newList;
-    })
+    //TODO: fetch recordList 
+    async function fetchRecordList() {
+      await fetch('http://127.0.0.1:8000/face/attend/findattend')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === 200) {
+            // initListRef.current = [...checkInRecordList]
+            initListRef.current = [...data.data]
+            setRecordList(() => {
+              const newList = initListRef.current.filter((item) => {
+                return isSameDay(item.date, dayjs().valueOf());
+              });
+              return newList;
+            })
+          } else {
+            console.log('failed')
+          }
+        })
+    }
+    fetchRecordList()
   }, [])
 
   function handleFilterStatusChange(payload: Payload) {

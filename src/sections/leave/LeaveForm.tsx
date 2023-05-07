@@ -39,18 +39,37 @@ const LeaveForm: React.FC<LeaveFormProps> = ({
 
     formData.append("date", willAddDate);
     //TODO: add leave apply request
-
-    setLeaveList([
-      {
-        leaveId: faker.datatype.uuid(),
-        title: formData.get("title") as string,
-        desc: formData.get("content") as string,
-        date: formData.get("date") as string,
-        result: LeaveApplyResult.Pending,
-      },
-      ...leaveList,
-    ]);
-    toggleAddButton();
+    async function addLeaveApply() {
+      const res = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      const data = await res.json();
+      if (data.status === 200) {
+        console.log("add leave apply success");
+        setLeaveList([
+          {
+            leaveId: faker.datatype.uuid(),
+            title: formData.get("title") as string,
+            desc: formData.get("content") as string,
+            date: formData.get("date") as string,
+            result: LeaveApplyResult.Pending,
+          },
+          ...leaveList,
+        ]);
+        toggleAddButton();
+      } else {
+        console.log(data.msg);
+      }
+    }
+    
+    addLeaveApply();
   }
 
   return (

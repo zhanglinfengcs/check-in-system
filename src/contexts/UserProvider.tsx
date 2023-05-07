@@ -3,6 +3,7 @@ import { UserType, IsStaff, Gender, AttendSituation, MResponseType } from "../ty
 
 interface UserContextType {
   user: UserType | null;
+  setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
   login: (userId: string, password: string) => Promise<MResponseType>;
   register: (user: UserType) => void;
 }
@@ -82,7 +83,7 @@ function UserProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <UserContext.Provider value={{ user, login, register }}>
+    <UserContext.Provider value={{ user, setUser, login, register }}>
       {children}
     </UserContext.Provider>
   );

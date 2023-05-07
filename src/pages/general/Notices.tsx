@@ -9,6 +9,7 @@ const Notices: React.FC = () => {
   
   useEffect(() => {
     //TODO: fetch noticeList
+    
     setNoticeList(initList);
   }, [])
 

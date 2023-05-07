@@ -3,19 +3,39 @@ import Page from "../../components/Page.tsx";
 import { LeaveForm, LeaveHistory } from "../../sections/leave";
 import { leaveHistoryList as initList } from "../../_mock";
 import IButton from "../../components/IButton.tsx";
-import { LeaveType } from "../../types/index.tsx";
+import { LeaveType, UserType } from "../../types/index.tsx";
+import useUser from "../../hooks/useUser.tsx";
 
 const Leave: React.FC = () => {
   const [openAddForm, setOpenAddForm] = useState<boolean>(false);
   const toggleAddButton = () => {
     setOpenAddForm(!openAddForm);
   };
+  const { user } = useUser()
 
   const [leaveList, setLeaveList] = useState<LeaveType[]>([]);
   useEffect(() => {
     //TODO: fetch leaveList
-    setLeaveList(initList);
-  }, [])
+    async function fetchLeaveList() {
+      const res = await fetch("http://127.0.0.1:8000/face/leave/finduserleave", {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: JSON.stringify({
+          userId: (user as UserType).userId,
+        })
+      });
+      const data = await res.json();
+      if (data.status === 200) {
+        setLeaveList(data.data);
+      } else {
+        console.log("fetch leaveList failed");
+      }
+    }
+
+    fetchLeaveList();
+  }, [user])
 
   return (
     <Page title="请假">

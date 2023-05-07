@@ -1,10 +1,12 @@
 import { Box, Paper, Stack, TextField } from "@mui/material";
 import IButton from "../../components/IButton";
 import { NoticeType } from "../../types";
+import { faker } from "@faker-js/faker";
 
 interface NoticeFormProps {
   noticeList: NoticeType[];
   setNoticeList: React.Dispatch<React.SetStateAction<NoticeType[]>>;
+  setSelectedId: React.Dispatch<React.SetStateAction<string | null>>
   toggleAddButton: () => void;
 }
 
@@ -12,14 +14,16 @@ const NoticeForm: React.FC<NoticeFormProps> = ({
   noticeList,
   setNoticeList,
   toggleAddButton,
+  setSelectedId
 }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     //TODO: add notice
     const formData = new FormData(event.currentTarget);
+    const nextNoticeId = faker.datatype.uuid()
     setNoticeList([
       {
-        noticeId: Date.now().toString(),
+        noticeId: nextNoticeId,
         title: formData.get("title") as string,
         content: formData.get("content") as string,
         createdTime: Date.now().toString(),
@@ -27,6 +31,7 @@ const NoticeForm: React.FC<NoticeFormProps> = ({
       },
       ...noticeList,
     ]);
+    setSelectedId(nextNoticeId)
     toggleAddButton();
   };
 

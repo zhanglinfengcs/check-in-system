@@ -16,9 +16,9 @@ import { generalCSS, selectedCSS } from "../../styles";
 interface NoticeManagePanelProps {
   noticeList: NoticeType[];
   setNoticeList: React.Dispatch<React.SetStateAction<NoticeType[]>>;
-  selectedId: string;
-  setSelectedId: React.Dispatch<React.SetStateAction<string>>;
-  selectedItem: NoticeType | undefined;
+  selectedId: string | null;
+  setSelectedId: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedItem: NoticeType | null;
 }
 
 const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
@@ -28,17 +28,18 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
   setSelectedId,
   selectedItem,
 }) => {
+
   const handleListItemClick = (id: string) => {
     setSelectedId(id);
   };
 
-  const [currentNotice, setCurrentNotice] = React.useState<NoticeType | undefined>(selectedItem);
-  console.log('currentNotice', currentNotice)
+  const [currentNotice, setCurrentNotice] = React.useState<NoticeType | null>(selectedItem);
+
   React.useEffect(() => {
     setCurrentNotice(selectedItem);
 
     return () => {
-      setCurrentNotice(undefined);
+      setCurrentNotice(null);
     }
   }, [selectedItem])
 
@@ -64,13 +65,17 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
       return item;
     });
     setNoticeList(newList);
+    setCurrentNotice({...currentNotice, editTime: Date.now().toString()} as NoticeType)
   };
 
   const handleDelete = () => {
     //TODO: delete notice
     const newList = noticeList.filter((item) => item.noticeId !== selectedId);
     setNoticeList(newList);
-    setSelectedId(newList[0]?.noticeId);
+    let nextSelectedId = null
+    if (newList.length > 0)
+      nextSelectedId = newList[0].noticeId
+    setSelectedId(nextSelectedId)
   };
 
   return (
@@ -95,7 +100,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
         >
           <Stack
             sx={{
-              width: "30%",
+              width: "40%",
               height: "100%",
               flexDirection: "column",
               overflow: "auto",
@@ -168,7 +173,7 @@ const NoticeManagePanel: React.FC<NoticeManagePanelProps> = ({
               sx={{
                 py: 2,
                 px: 4,
-                width: "70%",
+                width: "100%",
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",

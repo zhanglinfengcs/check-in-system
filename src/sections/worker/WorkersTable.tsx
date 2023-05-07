@@ -91,10 +91,29 @@ const WorkersTable: React.FC<WorkersTableProps> = ({
     ); 
   };
 
-  const handleClickDelete = (worker: string) => {
+  const handleClickDelete = (workerId: string) => {
     //TODO: delete worker
-    const newList = workerList.filter((item) => item.userId !== worker);
-    setWorkerList(newList);
+    async function deleteWorker() {
+      const res = await fetch('http://127.0.0.1:8000/face/home/deluser', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: workerId,
+        })
+      });
+      const data = await res.json();
+      if (data.status === 200) {
+        console.log("delete worker success");
+        const newList = workerList.filter((item) => item.userId !== workerId);
+        setWorkerList(newList);
+      } else {
+        console.log("delete worker failed");
+      }
+    }
+
+    deleteWorker();
   };
 
   return (

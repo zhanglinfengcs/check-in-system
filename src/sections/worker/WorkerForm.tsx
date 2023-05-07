@@ -64,8 +64,36 @@ const WorkerForm: React.FC<WorkerFormProps> = ({
 
   const onSubmit = () => {
     //TODO: add worker
-    setWorkerList([...workerList, values]);
-    toggleAddButton();
+
+    async function addWorker() {
+      const res = await fetch("http://127.0.0.1:8000/face/home/adduser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: JSON.stringify({
+          userId: values.userId,
+          name: values.name,
+          password: values.password,
+          phoneNum: values.phoneNum,
+          gender: values.gender,
+          isStaff: values.isStaff,
+          image: values.image,
+        })
+      })
+
+      const data = await res.json()
+      console.log(data)
+
+      if (data.status === 200) {
+        setWorkerList([...workerList, values]);
+        toggleAddButton();
+      } else {
+        console.log(data.msg)
+      }
+    }
+
+    addWorker()
   };
 
   const { values, setFieldValue, errors, touched, handleSubmit, handleChange } =

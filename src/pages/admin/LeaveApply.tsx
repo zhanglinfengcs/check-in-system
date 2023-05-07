@@ -7,6 +7,7 @@ import LeaveApplyResultChip from "../../components/LeaveApplyResultChip";
 import { LeaveApplyType, LeaveApplyResult } from "../../types";
 import { FormatDate } from "../../lib/Format";
 import { generalCSS, selectedCSS } from "../../styles";
+import axios from "axios";
 
 const LeaveApply: React.FC = () => {
   const [leaveApplyList, setLeaveApplyList] =
@@ -15,8 +16,18 @@ const LeaveApply: React.FC = () => {
 
   React.useEffect(() => {
     //TODO: get leave apply list
-    setLeaveApplyList(initList);
-    setSelectedId(initList[0].leaveId);
+    async function getLeaveApplyList() {
+      const res = await fetch('http://127.0.0.1:8000/face/leave/findleave')
+      const data = await res.json()
+      if (data.status === 200) {
+        setLeaveApplyList(data.data);
+        setSelectedId(data.data[0].leaveId);
+      } else {
+        console.log(data.msg)
+      }
+    }
+
+    getLeaveApplyList()
   }, [])
   
   const selectedItem = leaveApplyList.find(
@@ -27,26 +38,60 @@ const LeaveApply: React.FC = () => {
     setSelectedId(id);
   };
 
-  const handleApprove = (id: string) => {
+  const handleApprove = async (id: string) => {
     //TODO: send approve request
-    const newList = leaveApplyList.map((item) => {
-      if (item.leaveId === id) {
-        item.result = LeaveApplyResult.Approved;
+    async function fetchApprove() {
+      const {data} = await axios.post('http://127.0.0.1:8000/face/leave/editleave', {
+          leaveId: id,
+          result: LeaveApplyResult.Approved 
+        }, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      )
+      if (data.status === 200) {
+        const newList = leaveApplyList.map((item) => {
+          if (item.leaveId === id) {
+            item.result = LeaveApplyResult.Approved;
+          }
+          return item;
+        });
+        setLeaveApplyList(newList);
+      } else {
+        console.log(data.msg)
       }
-      return item;
-    });
-    setLeaveApplyList(newList);
+    }
+
+    fetchApprove()
   };
 
   const handleReject = (id: string) => {
-    //TODO: send reject request
-    const newList = leaveApplyList.map((item) => {
-      if (item.leaveId === id) {
-        item.result = LeaveApplyResult.Rejected;
+    //TODO: send approve request
+    async function fetchReject() {
+      const {data} = await axios.post('http://127.0.0.1:8000/face/leave/editleave', {
+          leaveId: id,
+          result: LeaveApplyResult.Rejected 
+        }, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      )
+      if (data.status === 200) {
+        const newList = leaveApplyList.map((item) => {
+          if (item.leaveId === id) {
+            item.result = LeaveApplyResult.Rejected;
+          }
+          return item;
+        });
+        setLeaveApplyList(newList);
+      } else {
+        console.log(data.msg)
       }
-      return item;
-    });
-    setLeaveApplyList(newList);
+    }
+
+    fetchReject()
   };
 
   return (

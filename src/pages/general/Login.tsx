@@ -22,7 +22,6 @@ const Login: React.FC = () => {
   const { login } = useUser() 
   const onSubmit = async () => {
     await login(values.userId, values.password).then((res) => {
-      console.log('login res: ', res)
       if (res.status === 200) {
         console.log("succeed");
         const user = res.data

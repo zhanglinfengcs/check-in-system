@@ -82,6 +82,29 @@ const WorkerDetails: React.FC = ( ) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     //TODO: update worker
+
+    async function updateWorker() {
+      const response = await fetch(
+        "http://127.0.0.1:8000/face/home/edituser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          body: JSON.stringify(values),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      if (data.status === 200) {
+        alert("修改成功");
+        window.history.back();
+      } else {
+        console.log(data.msg)
+      }
+    }
+
+    updateWorker();
   };
 
   return (
