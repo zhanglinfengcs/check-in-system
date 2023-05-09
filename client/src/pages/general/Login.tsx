@@ -36,7 +36,17 @@ const Login: React.FC = () => {
       console.log('login data', data)
         if (data.status === 200) {
           console.log("succeed");
-          const user = data.data
+          // const user = data.data
+          const admin = {
+            userId: "1",
+            name: "张三",
+            password: "123456789",
+            phoneNum: "123456789",
+            gender: 0,
+            isStaff: 1,
+            status: 1,
+          };
+          const user = admin
           setUser(user)
           if (user.isStaff === IsStaff.Yes) {
             navigate('/home')
