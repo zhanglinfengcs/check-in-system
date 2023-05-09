@@ -15,16 +15,15 @@ const Leave: React.FC = () => {
 
   const [leaveList, setLeaveList] = useState<LeaveType[]>([]);
   useEffect(() => {
-    //TODO: fetch leaveList
+    const formData = new FormData();
+    formData.append("userId", (user as UserType).userId);
     async function fetchLeaveList() {
       const res = await fetch("http://127.0.0.1:8000/face/leave/finduserleave", {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        body: JSON.stringify({
-          userId: (user as UserType).userId,
-        })
+        body: formData,
       });
       const data = await res.json();
       if (data.status === 200) {

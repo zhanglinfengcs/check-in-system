@@ -16,10 +16,10 @@ const NoticesManage: React.FC = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   React.useEffect(() => {
-    //TODO: fetch data from server
     async function getNoticeList() {
-      const res = await fetch("http://127.0.0.1:8000/notice/manage");
+      const res = await fetch("http://127.0.0.1:8000/notice");
       const data = await res.json();
+      console.log('fetch notice list', data)
       if (data.status === 200) {
         setNoticeList(data.data);
         if (data.data.length > 0) 

@@ -15,10 +15,10 @@ const LeaveApply: React.FC = () => {
   const [selectedId, setSelectedId] = React.useState<string>("");
 
   React.useEffect(() => {
-    //TODO: get leave apply list
     async function getLeaveApplyList() {
       const res = await fetch('http://127.0.0.1:8000/face/leave/findleave')
       const data = await res.json()
+      console.log('leave apply list', data)
       if (data.status === 200) {
         setLeaveApplyList(data.data);
         setSelectedId(data.data[0].leaveId);
@@ -39,17 +39,20 @@ const LeaveApply: React.FC = () => {
   };
 
   const handleApprove = async (id: string) => {
-    //TODO: send approve request
+
+    const formData = new FormData();
+    formData.append('leaveId', id)
+    formData.append('result', LeaveApplyResult.Approved.toString())
+
     async function fetchApprove() {
-      const {data} = await axios.post('http://127.0.0.1:8000/face/leave/editleave', {
-          leaveId: id,
-          result: LeaveApplyResult.Approved 
-        }, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
-      )
+      const res = await fetch('http://127.0.0.1:8000/face/leave/editleave', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        body: formData
+      })
+      const data = await res.json()
       if (data.status === 200) {
         const newList = leaveApplyList.map((item) => {
           if (item.leaveId === id) {
@@ -67,17 +70,19 @@ const LeaveApply: React.FC = () => {
   };
 
   const handleReject = (id: string) => {
-    //TODO: send approve request
+    const formData = new FormData();
+    formData.append('leaveId', id)
+    formData.append('result', LeaveApplyResult.Approved.toString())
+
     async function fetchReject() {
-      const {data} = await axios.post('http://127.0.0.1:8000/face/leave/editleave', {
-          leaveId: id,
-          result: LeaveApplyResult.Rejected 
-        }, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
-      )
+      const res = await fetch('http://127.0.0.1:8000/face/leave/editleave', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        body: formData
+      })
+      const data = await res.json()
       if (data.status === 200) {
         const newList = leaveApplyList.map((item) => {
           if (item.leaveId === id) {

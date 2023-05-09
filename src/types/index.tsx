@@ -67,6 +67,6 @@ export interface LeaveApplyType {
 
 export interface MResponseType {
   status: number;
-  message: string;
+  msg: string;
   data: UserType
 }

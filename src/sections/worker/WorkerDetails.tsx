@@ -16,6 +16,7 @@ import Page from "../../components/Page";
 import { Gender, UserType } from "../../types";
 import IButton from "../../components/IButton";
 import { useLocation } from "react-router-dom";
+import { RemoveTypeFromBase64 } from "../../lib/Convert";
 
 const states = [
   {
@@ -54,18 +55,14 @@ const WorkerDetails: React.FC = ( ) => {
   const reader = new FileReader();
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files as FileList;
-    // const imageObj = URL.createObjectURL(files[0]);
-    // setValues((prevState) => ({
-    //   ...prevState,
-    //   image: imageObj,
-    // }));
 
     reader.readAsDataURL(files[0]);
   };
   reader.onloadend = () => {
+    const willDisplayAvatar = reader.result
     setValues((prevState) => ({
       ...prevState,
-      image: reader.result as string,
+      image: willDisplayAvatar as string,
     }));
   };
 
@@ -81,7 +78,13 @@ const WorkerDetails: React.FC = ( ) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    //TODO: update worker
+    const formData = new FormData();
+    formData.append("userId", values.userId);
+    formData.append("name", values.name);
+    formData.append("gender", values.gender.toString())
+    formData.append("phoneNum", values.phoneNum);
+    const willSendImage = RemoveTypeFromBase64(values.image === undefined ? "" : values.image)
+    formData.append("image", willSendImage as string);
 
     async function updateWorker() {
       const response = await fetch(
@@ -91,11 +94,11 @@ const WorkerDetails: React.FC = ( ) => {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          body: JSON.stringify(values),
+          body: formData,
         }
       );
       const data = await response.json();
-      console.log(data);
+      console.log('update worker', data);
       if (data.status === 200) {
         alert("修改成功");
         window.history.back();

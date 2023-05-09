@@ -1,6 +1,10 @@
+import * as React from "react";
 import { Box, Paper, Stack } from "@mui/material";
 import { useState, useRef } from "react";
 import IButton from "../../components/IButton";
+import { AttendSituation, UserType } from "../../types";
+import useUser from "../../hooks/useUser";
+import { RemoveTypeFromBase64 } from "../../lib/Convert";
 
 const videoSize = {
   width: 640,
@@ -16,10 +20,39 @@ const Camera: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { user, setUser } = useUser();
 
   function handleCheckIn() {
-    //TODO: check in logic, send img(base64) to backend
-    console.log(imgRef.current?.src);
+    if (imgRef.current == null || isOpen === true) {
+      return
+    }
+    const checkInImage = RemoveTypeFromBase64(imgRef.current.src);
+
+    const formData = new FormData();
+    formData.append('userId', (user as UserType).userId);
+    formData.append('image', checkInImage as string);
+
+    async function checkIn() {
+      const res = await fetch('http://127.0.0.1:8000/face/home', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData,
+      })
+      const data = await res.json();
+      console.log('check in', data);
+      if (data.code === 200) {
+        setUser({
+          ...user as UserType,
+          status: AttendSituation.Checked,
+        })
+      } else {
+        console.log('check in failed');
+      }
+    }
+
+    checkIn();
   }
 
   function successFunc(mediaStream: MediaStream) {
@@ -52,6 +85,7 @@ const Camera: React.FC = () => {
   }
 
   function closeMedia() {
+    if (isOpen === false) return
     setIsOpen(false);
     const video = videoRef.current as HTMLVideoElement;
     const stream = video.srcObject as MediaStream;
@@ -72,20 +106,18 @@ const Camera: React.FC = () => {
     }
     const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
     ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight); // 把视频中的一帧在canvas画布里面绘制出来
-    const imgStr = canvas.toDataURL(); // 将图片资源转成字符串
-    const base64Img = imgStr.split(";base64,").pop(); // 将图片资源转成base64格式
-    const imgData = {
-      base64Img,
-    };
+    const base64Img = canvas.toDataURL(); // 将图片资源转成字符串
     closeMedia(); // 获取到图片之后可以自动关闭摄像头
-    return imgData;
+    return base64Img;
   }
 
   function saveImg() {
-    const data = getImg() as { base64Img: string };
-    const img = imgRef.current as HTMLImageElement;
-    img.src = data.base64Img as string;
+    const base64Image = getImg() as string;
+    const img = imgRef.current as HTMLImageElement;  
+    img.src = base64Image; 
   }
+  
+  
 
   return (
     <Paper

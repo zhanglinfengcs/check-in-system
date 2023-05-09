@@ -8,9 +8,18 @@ const Notices: React.FC = () => {
   const [noticeList, setNoticeList] = useState<NoticeType[]>([]);
   
   useEffect(() => {
-    //TODO: fetch noticeList
-    
-    setNoticeList(initList);
+    async function fetchNoticeList() {
+      const res = await fetch('http://127.0.0.1:8000/notice')
+      const data = await res.json()
+      console.log('fetch notice list data', data)
+      if (data.status === 200) {
+        setNoticeList(data.data)
+      } else {
+        console.log('fetch notice list failed')
+      }
+    }
+
+    fetchNoticeList()
   }, [])
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
